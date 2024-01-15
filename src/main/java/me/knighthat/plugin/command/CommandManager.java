@@ -75,7 +75,7 @@ public class CommandManager implements CommandExecutor {
                     return true;
                 }
 
-                MainHandler.givePlayerExpBottle( target, amount );
+                MainHandler.giveBottle( target, amount );
                 if ( target != player ) {
                     target.sendMessage( InfoKeeper.receiveInfoKeeper( player, target, InfoKeeper.xpBottleReceive, amount ) );
                     player.sendMessage( InfoKeeper.receiveInfoKeeper( player, target, InfoKeeper.xpBottleGive, amount ) );
@@ -118,7 +118,7 @@ public class CommandManager implements CommandExecutor {
 
         InfoKeeper.sendInfoKeeper( player, InfoKeeper.successfulWithdraw, toBottle );
 
-        MainHandler.givePlayerExpBottle( player, toBottle );
+        MainHandler.giveBottle( player, toBottle );
         ExpCalculator.take( player, amount );
 
         return true;
