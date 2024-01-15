@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import me.brannstroom.expbottle.command.ExpBottleCommand;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.brannstroom.expbottle.listeners.ExpBottleListener;
-import org.bstats.bukkit.Metrics;
+import me.knighthat.plugin.CommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -56,8 +56,7 @@ public class ExpBottle extends JavaPlugin {
         String[] aliases = new String[aliasList.size()];
         aliasList.toArray(aliases);
 
-        registerCommand("expbottle", new ExpBottleCommand(), aliases);
-
+        registerCommand( "expbottle", new CommandManager(), aliases );
     }
 
     public static void registerCommand(String name, CommandExecutor executor, String... aliases) {
