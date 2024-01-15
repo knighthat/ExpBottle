@@ -1,8 +1,9 @@
-package me.knighthat.plugin;
+package me.knighthat.plugin.command;
 
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.brannstroom.expbottle.handlers.MainHandler;
 import me.brannstroom.expbottle.model.Experience;
+import me.knighthat.plugin.ExpCalculator;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
