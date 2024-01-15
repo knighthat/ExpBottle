@@ -5,6 +5,7 @@ import java.util.List;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.brannstroom.expbottle.handlers.MainHandler;
 import me.brannstroom.expbottle.model.Experience;
+import me.knighthat.plugin.ExpCalculator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -67,7 +68,8 @@ public class ExpBottleListener implements Listener {
         }
 
         int bottledExperience = MainHandler.getBottledExperience(item);
-        Experience.changeExp(player, bottledExperience-1);
+        ExpCalculator.give( player, bottledExperience );
+//        Experience.changeExp(player, bottledExperience-1);
     }
 
     // TODO: Disable xp bottle from dispenser

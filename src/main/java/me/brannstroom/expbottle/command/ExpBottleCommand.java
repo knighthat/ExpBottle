@@ -4,6 +4,7 @@ import me.brannstroom.expbottle.ExpBottle;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.brannstroom.expbottle.handlers.MainHandler;
 import me.brannstroom.expbottle.model.Experience;
+import me.knighthat.plugin.ExpCalculator;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -35,7 +36,8 @@ public class ExpBottleCommand implements CommandExecutor {
                             if(price <= Experience.getExp(player)) {
                                 player.sendMessage(InfoKeeper.getInfoKeeper(player,  InfoKeeper.successfulWithdraw,  xp, Experience.getExp(player)));
                                 MainHandler.givePlayerExpBottle(player, xp);
-                                MainHandler.removePlayerExp(player, (int)price);
+                                ExpCalculator.take( player, (int) price );
+//                                MainHandler.removePlayerExp(player, (int)price);
                             }
                             else {
                                 player.sendMessage(InfoKeeper.getInfoKeeper(player, InfoKeeper.notEnoughXp, xp, Experience.getExp(player)));
@@ -45,7 +47,8 @@ public class ExpBottleCommand implements CommandExecutor {
                             if(xp <= Experience.getExp(player)) {
                                 player.sendMessage(InfoKeeper.getInfoKeeper(player,  InfoKeeper.successfulWithdraw,  xp, Experience.getExp(player)));
                                 MainHandler.givePlayerExpBottle(player, xp);
-                                MainHandler.removePlayerExp(player, xp+1);
+                                ExpCalculator.take( player, xp  );
+//                                MainHandler.removePlayerExp(player, xp+1);
                             }else {
                                 player.sendMessage(InfoKeeper.getInfoKeeper(player, InfoKeeper.notEnoughXp, xp, Experience.getExp(player)));
                             }
@@ -59,12 +62,14 @@ public class ExpBottleCommand implements CommandExecutor {
                         if(InfoKeeper.tax && !player.hasPermission("expbottle.bypasstax")) {
                             player.sendMessage(InfoKeeper.getInfoKeeper(player,  InfoKeeper.successfulWithdraw,  (int) (xp/(1+InfoKeeper.taxAmount)),  Experience.getExp(player)));
                             MainHandler.givePlayerExpBottle(player, (int) (xp/(1+InfoKeeper.taxAmount)));
-                            MainHandler.removePlayerExp(player, xp);
+                            ExpCalculator.take( player, xp );
+//                            MainHandler.removePlayerExp(player, xp);
                         }
                         else {
                             player.sendMessage(InfoKeeper.getInfoKeeper(player,  InfoKeeper.successfulWithdraw,  xp,  Experience.getExp(player)));
                             MainHandler.givePlayerExpBottle(player, xp);
-                            MainHandler.removePlayerExp(player, xp);
+                            ExpCalculator.take( player, xp );
+//                            MainHandler.removePlayerExp(player, xp);
                         }
                     }else {
                         player.sendMessage(InfoKeeper.getInfoKeeper(player, InfoKeeper.overMaxUnderMin, xp, Experience.getExp(player)));
