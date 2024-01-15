@@ -1,16 +1,16 @@
 package me.brannstroom.expbottle.handlers;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 import me.brannstroom.expbottle.ExpBottle;
 import me.brannstroom.expbottle.command.ExpBottleCommand;
 import me.brannstroom.expbottle.model.Experience;
+import me.knighthat.plugin.ExpCalculator;
+import net.kyori.adventure.text.Component;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -150,5 +150,54 @@ public class InfoKeeper {
         }
 
         return customConfig;
+    }
+
+    public static @NotNull String replacePlaceholders( @NotNull Player recipient, @NotNull String message, int amount, int totalExp ) {
+        // Name & display name
+        message = message.replace( "%playername%", recipient.getName() );
+        message = message.replace( "%playerdisplayname%", recipient.getDisplayName() );
+
+        // XP
+        message = message.replace( "%xp%", String.valueOf( amount ) );
+        message = message.replace( "%minxp%", String.valueOf( minXp ) );
+        message = message.replace( "%maxxp%", String.valueOf( maxXp ) );
+        message = message.replace( "%missingxp%", String.valueOf( amount - totalExp ) );
+        message = message.replace( "%playerxp%", String.valueOf( totalExp ) );
+
+        // Tax
+        int taxPercent = 0;
+        int taxAmount = 0;
+        int afterTax = amount;
+        if ( tax ) {
+            taxPercent = (int) ( InfoKeeper.taxAmount * 100 );
+            taxAmount = (int) ( amount * InfoKeeper.taxAmount );
+            afterTax = amount - taxAmount;
+        }
+        message = message.replace( "%tax%", String.valueOf( taxPercent ) );
+        message = message.replace( "%taxprice%", String.valueOf( taxAmount ) );
+        message = message.replace( "%taxout%", String.valueOf( afterTax ) );
+
+        return message;
+    }
+
+    public static @NotNull Component getInfoKeeper( @NotNull Player recipient, @NotNull String message, int amount ) {
+        int playerExp = (int) ExpCalculator.total( recipient );
+        message = replacePlaceholders( recipient, message, amount, playerExp );
+
+        return Component.text( message );
+    }
+
+    public static @NotNull Component receiveInfoKeeper( @NotNull Player giver, @NotNull Player receiver, @NotNull String message, int amount ) {
+        message = message.replace( "%receivername%", receiver.getName() );
+        message = message.replace( "%receiverdisplayname%", receiver.getDisplayName() );
+
+        int playerExp = (int) ExpCalculator.total( giver );
+        message = replacePlaceholders( giver, message, amount, playerExp );
+
+        return Component.text( message );
+    }
+
+    public static void sendInfoKeeper( @NotNull Player recipient, @NotNull String message, int amount ) {
+        recipient.sendMessage( getInfoKeeper( recipient, message, amount ) );
     }
 }

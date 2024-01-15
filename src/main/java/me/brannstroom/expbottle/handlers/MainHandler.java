@@ -1,6 +1,6 @@
 package me.brannstroom.expbottle.handlers;
 
-import me.brannstroom.expbottle.model.Experience;
+import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -44,15 +44,15 @@ public class MainHandler {
     public static void givePlayerExpBottle( Player player, int exp ) {
         ItemStack xpBottle = new ItemStack( Material.EXPERIENCE_BOTTLE, 1 );
         ItemMeta xpBottleMeta = xpBottle.getItemMeta();
-        xpBottleMeta.setDisplayName( InfoKeeper.getInfoKeeper( player, InfoKeeper.xpBottleName, exp, Experience.getExp( player ) ) );
-        List<String> lore = new ArrayList<>();
+        xpBottleMeta.displayName( InfoKeeper.getInfoKeeper( player, InfoKeeper.xpBottleName, exp ) );
+
+        List<Component> lore = new ArrayList<>();
         for ( String string : InfoKeeper.xpBottleLore ) {
             string = ChatColor.translateAlternateColorCodes( '&', string );
-            lore.add( InfoKeeper.getInfoKeeper( player, string, exp, Experience.getExp( player ) ) );
+            lore.add( InfoKeeper.getInfoKeeper( player, string, exp ) );
         }
-        xpBottleMeta.setLore( lore );
+        xpBottleMeta.lore( lore );
         xpBottle.setItemMeta( xpBottleMeta );
-
 
         MainHandler.givePlayerItemStack( player, xpBottle );
     }
