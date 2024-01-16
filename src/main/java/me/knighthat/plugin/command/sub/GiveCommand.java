@@ -1,12 +1,12 @@
 package me.knighthat.plugin.command.sub;
 
 import me.brannstroom.expbottle.ExpBottle;
-import me.knighthat.plugin.ExpCalculator;
 import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class GiveCommand extends ExpCommand {
 
@@ -16,14 +16,10 @@ public class GiveCommand extends ExpCommand {
     public @NotNull String getName() { return "give"; }
 
     @Override
-    protected void sendMessage( @NotNull Player giver, @NotNull Player receiver, int withdrawAmount, int toBottleAmount ) {
-        int totalExp = (int) ExpCalculator.total( giver );
-        if ( giver != receiver ) {
-            plugin.messages.send( giver, MessageFile.GIVE, giver, receiver, toBottleAmount, totalExp );
-            plugin.messages.send( receiver, MessageFile.RECEIVE, giver, receiver, toBottleAmount, totalExp );
-        } else
-            plugin.messages.send( receiver, MessageFile.SELF, giver, receiver, toBottleAmount, totalExp );
-    }
+    protected @NotNull String giverMessagePath() { return giver != receiver ? MessageFile.GIVE : MessageFile.SELF; }
+
+    @Override
+    protected @Nullable String receiverMessagePath() { return MessageFile.RECEIVE; }
 
     @Override
     public void execute( @NotNull Player player, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {

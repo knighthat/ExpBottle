@@ -6,6 +6,7 @@ import me.knighthat.plugin.bottle.ExperienceBottle;
 import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 
 public abstract class ExpCommand extends PlayerCommand {
@@ -54,9 +55,9 @@ public abstract class ExpCommand extends PlayerCommand {
             to.getWorld().dropItemNaturally( to.getLocation(), bottle );
     }
 
-    protected abstract void sendMessage( @NotNull Player giver, @NotNull Player receiver, int withdrawAmount, int toBottleAmount );
+    protected @NotNull String giverMessagePath() { return MessageFile.SUCCESS; }
 
-    public void setWithdrawAmount( @Range ( from = 0x0, to = Integer.MAX_VALUE ) int amount ) { this.withdrawAmount = amount; }
+    protected @Nullable String receiverMessagePath() { return null; }
 
     protected void setGiver( @NotNull Player giver ) {
         this.giver = giver;
@@ -82,7 +83,9 @@ public abstract class ExpCommand extends PlayerCommand {
         giveBottle( receiver, toBottleAmount );
         ExpCalculator.take( giver, withdrawAmount );
 
-        sendMessage( giver, receiver, withdrawAmount, toBottleAmount );
+        plugin.messages.send( giver, giverMessagePath(), giver, receiver, toBottleAmount, giverTotalExp );
+        if ( receiverMessagePath() != null )
+            plugin.messages.send( receiver, receiverMessagePath(), giver, receiver, toBottleAmount, giverTotalExp );
     }
 
     /**
