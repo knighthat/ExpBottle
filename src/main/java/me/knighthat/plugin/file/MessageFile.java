@@ -1,11 +1,10 @@
 package me.knighthat.plugin.file;
 
-import me.brannstroom.expbottle.handlers.InfoKeeper;
+import me.brannstroom.expbottle.ExpBottle;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +31,7 @@ public class MessageFile extends PluginFile {
     @NotNull
     public static final String PLAYER_NOT_FOUND = "player_not_found";
 
-    public MessageFile( @NotNull JavaPlugin plugin ) { super( plugin, "messages" ); }
+    public MessageFile( @NotNull ExpBottle plugin ) { super( plugin, "messages" ); }
 
     @SuppressWarnings ( { "deprecation" } )
     private @NotNull String replacePlayerPlaceHolders( @NotNull String message, @Nullable Player giver, @Nullable Player receiver ) {

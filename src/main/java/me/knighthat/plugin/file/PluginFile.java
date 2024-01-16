@@ -1,7 +1,7 @@
 package me.knighthat.plugin.file;
 
+import me.brannstroom.expbottle.ExpBottle;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,7 +10,7 @@ import java.io.File;
 public class PluginFile {
 
     @NotNull
-    private final JavaPlugin plugin;
+    protected final ExpBottle plugin;
 
     @NotNull
     private final String fileName;
@@ -19,7 +19,7 @@ public class PluginFile {
     @Nullable
     private YamlConfiguration yaml;
 
-    PluginFile( @NotNull JavaPlugin plugin, @NotNull String fileName ) {
+    PluginFile( @NotNull ExpBottle plugin, @NotNull String fileName ) {
         this.plugin = plugin;
         this.fileName = fileName + ".yml";
 
