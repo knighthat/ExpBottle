@@ -53,7 +53,7 @@ public class ExpCalculator {
             diff3 = 360;
         }
 
-        float result =( diff1 * levelSqr ) + ( diff2 * level ) + diff3;
+        float result = ( diff1 * levelSqr ) + ( diff2 * level ) + diff3;
         return (int) result;
     }
 
@@ -80,18 +80,18 @@ public class ExpCalculator {
      * @param total number of XP to convert to level
      * @return level at this xp
      */
-    public static double levelOf(long total) {
+    public static double levelOf( long total ) {
 
-        double diff1 = 1d, diff2 = 9d,diff3 = 0d, diff4 = 1d, diff5 = -3d;
+        double diff1 = 1d, diff2 = 9d, diff3 = 0d, diff4 = 1d, diff5 = -3d;
 
-        if (total > 1395) {
+        if ( total > 1395 ) {
             // Level 30+
             diff1 = 72d;
             diff2 = -54215;
             diff3 = 325;
             diff4 = 18;
             diff5 = 0;
-        }else if (total > 315) {
+        } else if ( total > 315 ) {
             // Level 16 to 29
             diff1 = 40;
             diff2 = -7839;
@@ -99,24 +99,27 @@ public class ExpCalculator {
             diff5 = 8.1;
         }
 
-        return (Math.sqrt(diff1 * total + diff2) + diff3) / diff4 + diff5;
+        return ( Math.sqrt( diff1 * total + diff2 ) + diff3 ) / diff4 + diff5;
     }
 
-    public static void set(@NotNull Player player, int total) {
+    public static void set( @NotNull Player player, int total ) {
         double levelAndExp = levelOf( total );
         int level = (int) levelAndExp;
 
-        player.setLevel(level);
-        player.setExp((float) (levelAndExp - level));
+        player.setLevel( level );
+        player.setExp( (float) ( levelAndExp - level ) );
     }
 
-    public static void give(@NotNull Player player, int amount) {
-        int total = (int) (total( player ) + amount);
+    public static void give( @NotNull Player player, int amount ) {
+        Logger.log( Level.INFO, "Give total: " + ( total( player ) + amount ) );
+
+
+        int total = total( player ) + amount;
         set( player, total );
     }
 
-    public static void take(@NotNull Player player, int amount) {
-        int remaining = (int) (total( player ) - amount);
+    public static void take( @NotNull Player player, int amount ) {
+        int remaining = total( player ) - amount;
         set( player, remaining );
     }
 }

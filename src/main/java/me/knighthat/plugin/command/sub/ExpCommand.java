@@ -21,12 +21,17 @@ public abstract class ExpCommand extends PlayerCommand {
     private int withdrawAmount = -1;
     @Range ( from = 0x0, to = Integer.MAX_VALUE )
     private int toBottleAmount = -1;
-    @NotNull
-    private Player giver;
-    @NotNull
-    private Player receiver;
 
     public ExpCommand( @NotNull ExpBottle plugin ) { super( plugin ); }
+
+    /**
+     * Verify if the given amount is within the
+     * acceptable range stated in config.yml file.
+     *
+     * @param amount experience points
+     * @return whether the amount is out of range
+     */
+    private boolean isOutOfRange( int amount ) { return amount > plugin.config.getMax() && amount < plugin.config.getMin(); }
 
     /**
      * This method does three simple jobs.
@@ -88,14 +93,7 @@ public abstract class ExpCommand extends PlayerCommand {
             plugin.messages.send( receiver, receiverMessagePath(), giver, receiver, toBottleAmount, giverTotalExp );
     }
 
-    /**
-     * Verify if the given amount is within the
-     * acceptable range stated in config.yml file.
-     *
-     * @param amount experience points
-     * @return whether the amount is out of range
-     */
-    private boolean isOutOfRange( int amount ) { return amount > plugin.config.getMax() && amount < plugin.config.getMin(); }
+    public void setWithdrawAmount( @Range ( from = 0x0, to = Integer.MAX_VALUE ) int amount ) { this.withdrawAmount = amount; }
 
     @Override
     public @NotNull String getPermission() { return "user"; }
