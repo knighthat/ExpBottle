@@ -70,7 +70,7 @@ public class CommandManager implements CommandExecutor {
             // then check if it falls into one of the aliases.
             // If both are failed, then move to the next sub-command.
             if ( !sub.getName().equalsIgnoreCase( args[0] ) &&
-                    !command.getAliases().contains( args[0] ) )
+                    !sub.getAliases().contains( args[0] ) )
                 continue;
 
             execute( sub, sender, command, alias, args );
