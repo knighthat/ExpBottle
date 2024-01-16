@@ -1,7 +1,9 @@
 package me.knighthat.plugin.command.sub;
 
+import me.brannstroom.expbottle.ExpBottle;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.knighthat.plugin.ExpCalculator;
+import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 
 public class AllCommand extends ExpCommand {
+
+    public AllCommand( ExpBottle plugin ) { super( plugin ); }
 
     @Override
     public @NotNull String getName() { return "all"; }
@@ -18,7 +22,7 @@ public class AllCommand extends ExpCommand {
 
     @Override
     protected void sendMessage( @NotNull Player giver, @NotNull Player receiver, int withdrawAmount, int toBottleAmount ) {
-        InfoKeeper.sendInfoKeeper( giver, InfoKeeper.successfulWithdraw, toBottleAmount );
+        plugin.messages.send( giver, MessageFile.SUCCESS, giver, receiver, toBottleAmount, (int) ExpCalculator.total( giver ) );
     }
 
     @Override

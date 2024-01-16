@@ -1,6 +1,9 @@
 package me.knighthat.plugin.command.sub;
 
+import me.brannstroom.expbottle.ExpBottle;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
+import me.knighthat.plugin.ExpCalculator;
+import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -10,6 +13,8 @@ import java.util.Collection;
 
 public class GiveCommand extends ExpCommand {
 
+    public GiveCommand( ExpBottle plugin ) { super( plugin ); }
+
     @Override
     public @NotNull String getName() { return "give"; }
 
@@ -18,11 +23,12 @@ public class GiveCommand extends ExpCommand {
 
     @Override
     protected void sendMessage( @NotNull Player giver, @NotNull Player receiver, int withdrawAmount, int toBottleAmount ) {
+        int totalExp = (int) ExpCalculator.total( giver );
         if ( giver != receiver ) {
-            receiver.sendMessage( InfoKeeper.receiveInfoKeeper( giver, receiver, InfoKeeper.xpBottleReceive, toBottleAmount ) );
-            giver.sendMessage( InfoKeeper.receiveInfoKeeper( giver, receiver, InfoKeeper.xpBottleGive, toBottleAmount ) );
+            plugin.messages.send( giver, MessageFile.GIVE, giver, receiver, toBottleAmount, totalExp );
+            plugin.messages.send( receiver, MessageFile.RECEIVE, giver, receiver, toBottleAmount, totalExp );
         } else
-            InfoKeeper.sendInfoKeeper( receiver, InfoKeeper.giveYourselfXp, toBottleAmount );
+            plugin.messages.send( receiver, MessageFile.SELF, giver, receiver, toBottleAmount, totalExp );
     }
 
     @Override
@@ -44,13 +50,13 @@ public class GiveCommand extends ExpCommand {
             // check for empty slot in said player's inventory.
             Player target = Bukkit.getPlayer( args[1] );
             if ( target == null ) {
-                InfoKeeper.sendInfoKeeper( player, InfoKeeper.playerNotOnline, 0 );
+                plugin.messages.send( player, MessageFile.PLAYER_NOT_FOUND );
             } else
                 setReceiver( target );
 
             action();
         } catch ( NumberFormatException e ) {
-            InfoKeeper.sendInfoKeeper( player, InfoKeeper.xpNotANumber, 0 );
+            plugin.messages.send( player, MessageFile.NOT_A_NUMBER );
         }
     }
 }

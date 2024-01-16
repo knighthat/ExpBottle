@@ -1,5 +1,6 @@
 package me.knighthat.plugin.command.sub;
 
+import me.brannstroom.expbottle.ExpBottle;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -11,6 +12,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 
 public abstract class SubCommand {
+
+    @NotNull
+    protected final ExpBottle plugin;
+
+    public SubCommand( @NotNull ExpBottle plugin ) {
+        this.plugin = plugin;
+    }
 
     public abstract @NotNull String getName();
 

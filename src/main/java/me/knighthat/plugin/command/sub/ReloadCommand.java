@@ -1,7 +1,8 @@
 package me.knighthat.plugin.command.sub;
 
+import me.brannstroom.expbottle.ExpBottle;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
-import net.kyori.adventure.text.Component;
+import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 
 public class ReloadCommand extends SubCommand {
+
+    public ReloadCommand( ExpBottle plugin ) { super( plugin ); }
 
     @Override
     public @NotNull String getName() { return "reload"; }
@@ -25,6 +28,7 @@ public class ReloadCommand extends SubCommand {
     @Override
     public void execute( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {
         InfoKeeper.updateConfig();
-        sender.sendMessage( Component.text( InfoKeeper.reloadSuccessful ) );
+        plugin.messages.reload();
+        plugin.messages.send( sender, MessageFile.RELOAD );
     }
 }

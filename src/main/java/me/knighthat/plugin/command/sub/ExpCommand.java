@@ -1,8 +1,10 @@
 package me.knighthat.plugin.command.sub;
 
+import me.brannstroom.expbottle.ExpBottle;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.brannstroom.expbottle.handlers.MainHandler;
 import me.knighthat.plugin.ExpCalculator;
+import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
@@ -18,6 +20,8 @@ public abstract class ExpCommand extends PlayerCommand {
     @NotNull
     private Player receiver;
 
+    public ExpCommand( @NotNull ExpBottle plugin ) { super( plugin ); }
+
     protected abstract void sendMessage( @NotNull Player giver, @NotNull Player receiver, int withdrawAmount, int toBottleAmount );
 
     public void setWithdrawAmount( @Range ( from = 0x0, to = Integer.MAX_VALUE ) int amount ) { this.withdrawAmount = amount; }
@@ -28,7 +32,7 @@ public abstract class ExpCommand extends PlayerCommand {
 
     protected void action() {
         if ( isOutOfRange( withdrawAmount ) ) {
-            InfoKeeper.sendInfoKeeper( giver, InfoKeeper.overMaxUnderMin, withdrawAmount );
+            plugin.messages.send( giver, MessageFile.OUT_OF_RANGE );
             return;
         }
 

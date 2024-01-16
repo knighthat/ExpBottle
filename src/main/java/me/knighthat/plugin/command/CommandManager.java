@@ -1,8 +1,8 @@
 package me.knighthat.plugin.command;
 
-import me.brannstroom.expbottle.handlers.InfoKeeper;
+import me.brannstroom.expbottle.ExpBottle;
 import me.knighthat.plugin.command.sub.*;
-import net.kyori.adventure.text.Component;
+import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,20 +15,26 @@ import java.util.List;
 public class CommandManager implements CommandExecutor {
 
     @NotNull
+    private final ExpBottle plugin;
+
+    @NotNull
     private final List<SubCommand> subCommandList = new ArrayList<>( 4 );
 
     @NotNull
-    private final DefaultXpCommand defaultSubCommand = new DefaultXpCommand();
+    private final DefaultXpCommand defaultSubCommand;
 
-    public CommandManager() {
-        subCommandList.add( new ReloadCommand() );
-        subCommandList.add( new AllCommand() );
-        subCommandList.add( new GiveCommand() );
+    public CommandManager( @NotNull ExpBottle plugin ) {
+        this.plugin = plugin;
+
+        subCommandList.add( new ReloadCommand( plugin ) );
+        subCommandList.add( new AllCommand( plugin ) );
+        subCommandList.add( new GiveCommand( plugin ) );
+        defaultSubCommand = new DefaultXpCommand( plugin );
     }
 
     private void execute( @NotNull SubCommand subCommand, @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {
         if ( !subCommand.hasPermission( sender ) ) {
-            sender.sendMessage( Component.text( InfoKeeper.noPermission ) );
+            plugin.messages.send( sender, MessageFile.NO_PERMISSION );
             return;
         }
 

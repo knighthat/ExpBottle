@@ -1,5 +1,6 @@
 package me.knighthat.plugin.command.sub;
 
+import me.brannstroom.expbottle.ExpBottle;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.command.Command;
@@ -8,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class PlayerCommand extends SubCommand {
+
+    public PlayerCommand( ExpBottle plugin ) { super( plugin ); }
 
     public abstract void execute( @NotNull Player player, @NotNull Command command, @NotNull String alias, @NotNull String[] args );
 
