@@ -1,22 +1,14 @@
 package me.knighthat.plugin.file;
 
 import me.brannstroom.expbottle.ExpBottle;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigFile extends PluginFile {
 
     public ConfigFile( @NotNull ExpBottle plugin ) { super( plugin, "config" ); }
-
-    private @NotNull Component color( @NotNull String input ) {
-        return LegacyComponentSerializer.legacyAmpersand().deserialize( input );
-    }
 
     public boolean isThrowable() { return get().getBoolean( "throwable", true ); }
 
@@ -28,13 +20,11 @@ public class ConfigFile extends PluginFile {
 
     public double getTaxAmount() { return get().getDouble( "tax_amount", .1d ); }
 
-    public void applyConfiguration( @NotNull ItemMeta meta ) {
-        String fromFile = get().getString( "bottle.name", "THERE IS SOMETHING WRONG WITH THIS LINE!" );
-        meta.displayName( color( fromFile ) );
+    public @NotNull String getBottleName() {
+        return get().getString( "bottle.name", "THERE IS SOMETHING WRONG WITH THIS LINE!" );
+    }
 
-        List<Component> lore = new ArrayList<>();
-        for ( String line : get().getStringList( "bottle.lore" ) )
-            lore.add( color( line ) );
-        meta.lore( lore );
+    public @NotNull List<String> getBottleLore() {
+        return get().getStringList( "bottle.lore" );
     }
 }

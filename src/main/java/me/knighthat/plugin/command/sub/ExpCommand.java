@@ -2,12 +2,9 @@ package me.knighthat.plugin.command.sub;
 
 import me.brannstroom.expbottle.ExpBottle;
 import me.knighthat.plugin.ExpCalculator;
-import me.knighthat.plugin.bottle.ExpData;
+import me.knighthat.plugin.bottle.ExperienceBottle;
 import me.knighthat.plugin.file.MessageFile;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
@@ -24,22 +21,24 @@ public abstract class ExpCommand extends PlayerCommand {
 
     public ExpCommand( @NotNull ExpBottle plugin ) { super( plugin ); }
 
-    private @NotNull ItemStack makeBottle( int exp ) {
-        ItemStack bottle = new ItemStack( Material.EXPERIENCE_BOTTLE, 1 );
-        ItemMeta meta = bottle.getItemMeta();
-
-        // Apply name and lore to ItemMeta
-        plugin.config.applyConfiguration( meta );
-
-        // Inject XP to persistent data container
-        ExpData.inject( meta, exp );
-
-        bottle.setItemMeta( meta );
-        return bottle;
-    }
-
+    /**
+     * This method does three simple jobs.
+     * 1. Initialize Experience Bottle instance
+     * 2. Set its properties (name & lore)
+     * 3. Give it to provided player
+     * <p>
+     * NOTE: If the receiver does not have at lease 1 empty
+     * space in his/her inventory, the bottle will be
+     * thrown to the ground in front of said player.
+     *
+     * @param to  who will get this bottle
+     * @param exp how many xp will this bottle contain
+     * @see ExperienceBottle
+     */
     private void giveBottle( @NotNull Player to, int exp ) {
-        ItemStack bottle = makeBottle( exp );
+        ExperienceBottle bottle = new ExperienceBottle( giver, exp );
+        bottle.setDisplayName( plugin.config.getBottleName() );
+        bottle.setLore( plugin.config.getBottleLore() );
 
         int firstEmpty = to.getInventory().firstEmpty();
         // -1 means no empty slot, any other positive number is an empty slot
