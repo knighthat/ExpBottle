@@ -119,12 +119,13 @@ public class ExpBottleListener implements Listener {
             ExpCalculator.give( player, exp );
     }
 
-    // TODO: Disable xp bottle from dispenser
-    @EventHandler
-    public void onBlockDispense(BlockDispenseEvent event) {
-        if(InfoKeeper.throwable) return;
-        if(event.getItem() != null && MainHandler.isExpBottle(event.getItem())) {
-            event.setCancelled(true);
+    @Deprecated
+    //    @EventHandler
+    public void onBlockDispense( BlockDispenseEvent event ) {
+        if ( InfoKeeper.throwable )
+            return;
+        if ( event.getItem() != null && MainHandler.isExpBottle( event.getItem() ) ) {
+            event.setCancelled( true );
         }
     }
 }
