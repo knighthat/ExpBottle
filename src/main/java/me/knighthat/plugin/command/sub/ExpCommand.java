@@ -10,6 +10,12 @@ import org.jetbrains.annotations.Range;
 
 public abstract class ExpCommand extends PlayerCommand {
 
+    @NotNull
+    protected Player giver;
+    @NotNull
+    protected Player receiver;
+    @Range ( from = 0x0, to = Integer.MAX_VALUE )
+    protected int giverTotalExp;
     @Range ( from = 0x0, to = Integer.MAX_VALUE )
     private int withdrawAmount = -1;
     @Range ( from = 0x0, to = Integer.MAX_VALUE )
@@ -36,7 +42,7 @@ public abstract class ExpCommand extends PlayerCommand {
      * @see ExperienceBottle
      */
     private void giveBottle( @NotNull Player to, int exp ) {
-        ExperienceBottle bottle = new ExperienceBottle( giver, exp );
+        ExperienceBottle bottle = new ExperienceBottle( giver, exp, giverTotalExp );
         bottle.setDisplayName( plugin.config.getBottleName() );
         bottle.setLore( plugin.config.getBottleLore() );
 
@@ -52,7 +58,10 @@ public abstract class ExpCommand extends PlayerCommand {
 
     public void setWithdrawAmount( @Range ( from = 0x0, to = Integer.MAX_VALUE ) int amount ) { this.withdrawAmount = amount; }
 
-    protected void setGiver( @NotNull Player giver ) { this.giver = giver; }
+    protected void setGiver( @NotNull Player giver ) {
+        this.giver = giver;
+        this.giverTotalExp = ExpCalculator.total( giver );
+    }
 
     protected void setReceiver( @NotNull Player receiver ) { this.receiver = receiver; }
 

@@ -1,6 +1,5 @@
 package me.knighthat.plugin;
 
-import me.brannstroom.expbottle.model.Experience;
 import me.knighthat.plugin.logging.Logger;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -66,9 +65,11 @@ public class ExpCalculator {
      * @param player who to check
      * @return the amount of XP points this player has
      */
-    public static float total( @NotNull Player player ) {
+    public static int total( @NotNull Player player ) {
         int level = player.getLevel();
-        return ( at( level ) + ( nextReq( level ) * player.getExp() ) );
+        int progress = Math.round( nextReq( level ) * player.getExp() );
+
+        return at( level ) + progress;
     }
 
     /**

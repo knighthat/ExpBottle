@@ -23,7 +23,7 @@ public class AllCommand extends ExpCommand {
     public void execute( @NotNull Player player, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {
         setGiver( player );
         setReceiver( player );
-        setWithdrawAmount( (int) ExpCalculator.total( player ) );
+        setWithdrawAmount( giverTotalExp );
         action();
     }
 }

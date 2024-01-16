@@ -1,6 +1,5 @@
 package me.knighthat.plugin.bottle;
 
-import me.knighthat.plugin.ExpCalculator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
@@ -18,15 +17,20 @@ public class ExperienceBottle extends ItemStack {
     @NotNull
     private final Player creator;
     @Range ( from = 0x0, to = Integer.MAX_VALUE )
+    private final int totalExp;
+    @Range ( from = 0x0, to = Integer.MAX_VALUE )
     private final int exp;
 
     public ExperienceBottle(
             @NotNull Player creator,
-            @Range ( from = 0x0, to = Integer.MAX_VALUE ) int exp ) {
+            @Range ( from = 0x0, to = Integer.MAX_VALUE ) int exp,
+            @Range ( from = 0x0, to = Integer.MAX_VALUE ) int totalExp
+    ) {
         super( Material.EXPERIENCE_BOTTLE );
 
         this.creator = creator;
         this.exp = exp;
+        this.totalExp = totalExp;
 
         // Inject XP to Persistent Data Container
         editMeta( meta -> ExpData.inject( meta, exp ) );
@@ -44,7 +48,6 @@ public class ExperienceBottle extends ItemStack {
         text = text.replace( "%playerdisplayname%", creator.getDisplayName() );
 
         // Replace XP values
-        int totalExp = (int) ExpCalculator.total( creator );
         text = text.replace( "%xp%", String.valueOf( exp ) );
         text = text.replace( "%playerxp%", String.valueOf( totalExp ) );
         text = text.replace( "%missingxp%", String.valueOf( exp - totalExp ) );
