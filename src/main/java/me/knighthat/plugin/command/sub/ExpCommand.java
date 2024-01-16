@@ -2,8 +2,12 @@ package me.knighthat.plugin.command.sub;
 
 import me.brannstroom.expbottle.ExpBottle;
 import me.knighthat.plugin.ExpCalculator;
+import me.knighthat.plugin.bottle.ExpData;
 import me.knighthat.plugin.file.MessageFile;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
@@ -19,6 +23,31 @@ public abstract class ExpCommand extends PlayerCommand {
     private Player receiver;
 
     public ExpCommand( @NotNull ExpBottle plugin ) { super( plugin ); }
+
+    private @NotNull ItemStack makeBottle( int exp ) {
+        ItemStack bottle = new ItemStack( Material.EXPERIENCE_BOTTLE, 1 );
+        ItemMeta meta = bottle.getItemMeta();
+
+        // Apply name and lore to ItemMeta
+        plugin.config.applyConfiguration( meta );
+
+        // Inject XP to persistent data container
+        ExpData.inject( meta, exp );
+
+        bottle.setItemMeta( meta );
+        return bottle;
+    }
+
+    private void giveBottle( @NotNull Player to, int exp ) {
+        ItemStack bottle = makeBottle( exp );
+
+        int firstEmpty = to.getInventory().firstEmpty();
+        // -1 means no empty slot, any other positive number is an empty slot
+        if ( firstEmpty > -1 )
+            to.getInventory().setItem( firstEmpty, bottle );
+        else
+            to.getWorld().dropItemNaturally( to.getLocation(), bottle );
+    }
 
     protected abstract void sendMessage( @NotNull Player giver, @NotNull Player receiver, int withdrawAmount, int toBottleAmount );
 
@@ -42,7 +71,7 @@ public abstract class ExpCommand extends PlayerCommand {
         else
             toBottleAmount = withdrawAmount;
 
-        MainHandler.giveBottle( receiver, toBottleAmount );
+        giveBottle( receiver, toBottleAmount );
         ExpCalculator.take( giver, withdrawAmount );
 
         sendMessage( giver, receiver, withdrawAmount, toBottleAmount );

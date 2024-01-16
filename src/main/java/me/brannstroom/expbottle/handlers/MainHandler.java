@@ -1,13 +1,11 @@
 package me.brannstroom.expbottle.handlers;
 
-import me.knighthat.plugin.bottle.ExpData;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,40 +88,5 @@ public class MainHandler {
             }
         }
         return 0;
-    }
-
-    private static @NotNull ItemStack makeBottle( @NotNull Player creator, int exp ) {
-        ItemStack bottle = new ItemStack( Material.EXPERIENCE_BOTTLE );
-        ItemMeta meta = bottle.getItemMeta();
-
-        // Set display name
-        meta.displayName( InfoKeeper.getInfoKeeper( creator, InfoKeeper.xpBottleName, exp ) );
-
-        // Set lore
-        List<Component> lore = new ArrayList<>();
-        for ( String string : InfoKeeper.xpBottleLore ) {
-            string = ChatColor.translateAlternateColorCodes( '&', string );
-            lore.add( InfoKeeper.getInfoKeeper( creator, string, exp ) );
-        }
-        meta.lore( lore );
-
-        // Inject XP to persistent data container
-        ExpData.inject( meta, exp );
-
-        // Set meta back to item
-        bottle.setItemMeta( meta );
-
-        return bottle;
-    }
-
-    public static void giveBottle( @NotNull Player to, int amount ) {
-        ItemStack bottle = makeBottle( to, amount );
-
-        int firstEmpty = to.getInventory().firstEmpty();
-        // -1 means no empty slot, any other positive number is an empty slot
-        if ( firstEmpty > -1 )
-            to.getInventory().setItem( firstEmpty, bottle );
-        else
-            to.getWorld().dropItemNaturally( to.getLocation(), bottle );
     }
 }
