@@ -53,10 +53,10 @@ public class MessageFile extends PluginFile {
     private @NotNull String replaceXpPlaceHolders( @NotNull String message, int amount, int totalExp ) {
         String msg = message;
 
-        String minXp = String.valueOf( InfoKeeper.minXp );
+        String minXp = String.valueOf( plugin.config.getMin() );
         msg = msg.replace( "%minxp%", minXp );
 
-        String maxXp = String.valueOf( InfoKeeper.maxXp );
+        String maxXp = String.valueOf( plugin.config.getMax() );
         msg = msg.replace( "%maxxp%", maxXp );
 
         if ( amount >= 0 )

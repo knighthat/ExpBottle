@@ -1,66 +1,40 @@
-### ExpBottle
+# If disabled, the bottle will be consumed when a player right-click it
+throwable: true
 
-### Translatable messages
+# The lowest XP a player can withdraw
+minimum_exp: 50
+# The highest XP a player can withdraw
+maximum_exp: 999999
 
-# If tax is disabled (like it is by default), remember to remove all %tax% and %taxprice% from the messages.
+# Tax will deduct the total amount goes to the bottle.
+# For example, if tax is enabled and at the rate of 10%,
+# if a player withdraws 1000 XP, the bottle will have 900.
+tax: false
+# Decimal form, e.g 0.1 = 10%
+tax_amount: 0.1
 
-No Permission: '&cYou do not have the right permissions to execute this command.'
-Command Usage User: '&aUse &r/expbottle <XP/All> &ato withdraw experience. You currently have &r%playerxp% &aXP.'
-Command Usage Admin: '&aUse &r/expbottle <XP/All/Give/Reload> [Player] [XP] &ato withdraw or give XP. You currently have &r%playerxp% &aXP. There is a &r%tax%% &atax on all withdrawals.'
-Not Enough Experience: '&cYou do not have the sufficient experience. You need %taxprice% to withdraw %xp%'
-Invalid XP: '&cXP must be a number.'
-XP is more than max or less than min: '&cYou cant withdraw more than &r%maxxp% &cXP or less than &r%minxp% &cXP.'
-Successful Withdraw: '&aYou successfully withdrew &r%xp% &aXP.'
-Reload Successful: '&aYou successfully reloaded the config.'
-XP Bottle Give: '&aYou gave &r%receiverdisplayname% &aan XP Bottle with &r%xp% &aXP.'
-XP Bottle Receive: '%playerdisplayname% &agave you an XP Bottle with &r%xp% &aXP.'
-Give Yourself XP: '&aYou gave yourself an XP Bottle with &r%xp% &aXP.'
-Player Not Online: '&cSpecified player is not online.'
-Could Not Find Xp Line: '&cSomething has gone wrong, there is no line to show XP in the config. Contact an administrator.'
+# XP Bottle information
+bottle:
+  name: '&aXP Bottle'
+  lore:
+    - '&9Creator: &r%playerdisplayname%'
+    - '&9XP: &a%xp%'
 
-### XP Bottle informasjon
-# One of the lines in lore MUST use %xp%
-XP Bottle Name: '&aXP Bottle'
-XP Bottle Lore:
-- '&9Creator: &r%playerdisplayname%'
-- '&9XP: &a%xp%'
-
-### Throwable XP Bottle
-# If server uses any XP multiplier, it is recommended to set this to false.
-# This will consume the XP bottle and give the player the XP, and not throw the bottle.
-# Settings this to false will also disable throwing the bottle using dispensers.
-Throwable: true
-
-### Minimum and maximum amount of XP you can withdraw to a single bottle
-Min XP: 50
-Max XP: 999999
-
-### Tax on xp bottle
-Tax: false
-# Tax amount in decimal form, e.g 0.1 = 10%
-Tax Amount: 0.0
-
-### Aliases
-
-## Simply add a new line with a new alias e.g:
-# exampleAliases:
-# - 'alias1'
-# - 'alias2'
-
-#Aliases to the actual expbottle command
-#Reloading the config after updating commandAliases will show added aliases as red, but will still work.
-#Restarting or reloading the server will fix this.
-Command Aliases:
-- 'xpbottle'
-
-#Aliases to the "give" function, which will give named player a specified amount of xp.
-Give Aliases:
-- 'i'
-
-#Aliases to the "all" function, which withdraws all your xp.
-All Aliases:
-- 'everything'
-
-#Aliases to the "reload" function, which reloads this config
-Reload Aliases:
-- 'rel'
+# Leave empty if you don't want any aliases
+aliases:
+  # The Default command is 'expbottle'.
+  # Any changes of main command require
+  # server restart.
+  main:
+    - xpbottle
+    - xpb
+    - xb
+  # Sub-command "give"
+  give:
+    - i
+  # Sub-command "all"
+  all:
+    - everything
+  # Sub-command "reload"
+  reload:
+    - rel

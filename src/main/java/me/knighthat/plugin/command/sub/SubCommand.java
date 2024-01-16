@@ -22,11 +22,14 @@ public abstract class SubCommand {
 
     public abstract @NotNull String getName();
 
-    public abstract @NotNull Collection<String> getAliases();
-
     public abstract @NotNull String getPermission();
 
     public abstract boolean isPlayerCommand();
+
+    public @NotNull Collection<String> getAliases() {
+        String path = "aliases." + getName();
+        return plugin.config.get().getStringList( path );
+    }
 
     public abstract void execute( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args );
 

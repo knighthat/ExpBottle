@@ -1,8 +1,6 @@
 package me.knighthat.plugin.command.sub;
 
 import me.brannstroom.expbottle.ExpBottle;
-import me.brannstroom.expbottle.handlers.InfoKeeper;
-import me.brannstroom.expbottle.handlers.MainHandler;
 import me.knighthat.plugin.ExpCalculator;
 import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.entity.Player;
@@ -38,9 +36,9 @@ public abstract class ExpCommand extends PlayerCommand {
 
         // If tax is on, deduct tax and set 'toBottleAmount' to the after tax amount,
         // If not, 'toBottleAmount' stays the same as 'withdrawAmount'
-        if ( InfoKeeper.tax && !hasPermission( giver, "bypasstax" ) )
+        if ( plugin.config.isTaxEnabled() && !hasPermission( giver, "bypasstax" ) )
             // If tax is enabled & player doesn't have "expbottle.bypasstax" permission
-            toBottleAmount = (int) ( withdrawAmount - ( withdrawAmount * InfoKeeper.taxAmount ) );
+            toBottleAmount = (int) ( withdrawAmount - ( withdrawAmount * plugin.config.getTaxAmount() ) );
         else
             toBottleAmount = withdrawAmount;
 
@@ -57,7 +55,7 @@ public abstract class ExpCommand extends PlayerCommand {
      * @param amount experience points
      * @return whether the amount is out of range
      */
-    private boolean isOutOfRange( int amount ) { return amount > InfoKeeper.maxXp && amount < InfoKeeper.minXp; }
+    private boolean isOutOfRange( int amount ) { return amount > plugin.config.getMax() && amount < plugin.config.getMin(); }
 
     @Override
     public @NotNull String getPermission() { return "user"; }

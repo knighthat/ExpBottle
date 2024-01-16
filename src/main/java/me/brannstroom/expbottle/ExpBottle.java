@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.brannstroom.expbottle.listeners.ExpBottleListener;
 import me.knighthat.plugin.command.CommandManager;
+import me.knighthat.plugin.file.ConfigFile;
 import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -24,9 +25,12 @@ public class ExpBottle extends JavaPlugin {
     public static ExpBottle instance;
 
     @NotNull
+    public final ConfigFile config;
+    @NotNull
     public final MessageFile messages;
 
     public ExpBottle() {
+        this.config = new ConfigFile( this );
         this.messages = new MessageFile( this );
     }
 

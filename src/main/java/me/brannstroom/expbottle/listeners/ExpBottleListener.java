@@ -1,5 +1,6 @@
 package me.brannstroom.expbottle.listeners;
 
+import me.brannstroom.expbottle.ExpBottle;
 import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.brannstroom.expbottle.handlers.MainHandler;
 import me.knighthat.plugin.ExpCalculator;
@@ -19,6 +20,13 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class ExpBottleListener implements Listener {
+
+    @NotNull
+    private final ExpBottle plugin;
+
+    public ExpBottleListener( @NotNull ExpBottle plugin ) {
+        this.plugin = plugin;
+    }
 
     @Deprecated
     //    @EventHandler
@@ -85,7 +93,7 @@ public class ExpBottleListener implements Listener {
     @EventHandler ( priority = EventPriority.HIGHEST )
     public void onPlayerRightClickBottle( @NotNull PlayerInteractEvent event ) {
         // Only continue if throwable is disabled and the item isn't null
-        if ( InfoKeeper.throwable || event.getItem() == null )
+        if ( plugin.config.isThrowable() || event.getItem() == null )
             return;
 
         ItemStack item = event.getItem();
