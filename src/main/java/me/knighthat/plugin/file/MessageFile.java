@@ -62,9 +62,9 @@ public class MessageFile extends PluginFile {
         if ( amount >= 0 )
             msg = msg.replace( "%xp%", String.valueOf( amount ) );
         if ( totalExp >= 0 )
-            msg = msg.replace( "%missingxp%", String.valueOf( amount - totalExp ) );
-        if ( amount >= 0 && totalExp >= 0 )
             msg = msg.replace( "%playerxp%", String.valueOf( totalExp ) );
+        if ( amount >= 0 && totalExp >= 0 )
+            msg = msg.replace( "%missingxp%", String.valueOf( amount - totalExp ) );
 
         return msg;
     }
