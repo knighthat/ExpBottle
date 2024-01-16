@@ -30,6 +30,12 @@ public class PluginFile {
     private void startup() {
         if ( file == null )
             this.file = new File( plugin.getDataFolder(), fileName );
+        createIfNotExist();
+    }
+
+    private void createIfNotExist() {
+        if ( file == null )
+            startup();
 
         if ( !file.exists() )
             plugin.saveResource( fileName, false );
@@ -38,6 +44,7 @@ public class PluginFile {
     public void reload() {
         if ( file == null )
             startup();
+        createIfNotExist();
 
         this.yaml = YamlConfiguration.loadConfiguration( this.file );
     }
