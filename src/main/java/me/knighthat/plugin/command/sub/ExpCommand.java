@@ -85,6 +85,12 @@ public abstract class ExpCommand extends PlayerCommand {
         else
             toBottleAmount = withdrawAmount;
 
+        // If exp is insufficient, send a message
+        if ( withdrawAmount > giverTotalExp ) {
+            plugin.messages.send( giver, MessageFile.INSUFFICIENT );
+            return;
+        }
+
         giveBottle( receiver, toBottleAmount );
         ExpCalculator.take( giver, withdrawAmount );
 
