@@ -1,9 +1,7 @@
 package me.knighthat.plugin;
 
-import me.knighthat.plugin.logging.Logger;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.event.Level;
 
 public class ExpCalculator {
 
@@ -111,9 +109,6 @@ public class ExpCalculator {
     }
 
     public static void give( @NotNull Player player, int amount ) {
-        Logger.log( Level.INFO, "Give total: " + ( total( player ) + amount ) );
-
-
         int total = total( player ) + amount;
         set( player, total );
     }
