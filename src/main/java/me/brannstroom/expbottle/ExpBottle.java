@@ -1,7 +1,6 @@
 package me.brannstroom.expbottle;
 
 import com.google.common.collect.Lists;
-import me.brannstroom.expbottle.handlers.InfoKeeper;
 import me.brannstroom.expbottle.listeners.ExpBottleListener;
 import me.knighthat.plugin.command.CommandManager;
 import me.knighthat.plugin.file.ConfigFile;
@@ -17,8 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.logging.Level;
+import java.lang.reflect.InvocationTargetException;
 
 public class ExpBottle extends JavaPlugin {
 
@@ -52,58 +50,32 @@ public class ExpBottle extends JavaPlugin {
         }
     }
 
-    public void onEnable() {
-        instance = this;
-        loadListeners();
-        loadCommands();
-
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
-
+    private void registerCommand() {
         try {
-            InfoKeeper.updateConfig();
-        }
-        catch(Exception e) {
-            getLogger().log(Level.INFO, "Could not update config. If this is your first launch of the plugin, do not worry.");
-        }
+            // Using reflection to create an instance of PluginCommand
+            Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor( String.class, Plugin.class );
+            constructor.setAccessible( true );
 
-        int pluginId = 13813;
-        Metrics metrics = new Metrics(this, pluginId);
-    }
+            PluginCommand command = constructor.newInstance( "expbottle", this );
 
-    public void onDisable() {
+            // Set executor and its aliases from config.yml
+            command.setExecutor( new CommandManager( this ) );
+            command.setAliases( config.get().getStringList( "aliases.main" ) );
 
-    }
-
-    private void loadListeners() {
-        getServer().getPluginManager().registerEvents(new ExpBottleListener(), this);
-    }
-
-    private void loadCommands() {
-
-        List<String> aliasList = ExpBottle.getPlugin(ExpBottle.class).getConfig().getStringList("commandAliases");
-        String[] aliases = new String[aliasList.size()];
-        aliasList.toArray(aliases);
-
-        registerCommand( "expbottle", new CommandManager(), aliases );
-    }
-
-    public static void registerCommand(String name, CommandExecutor executor, String... aliases) {
-        try {
-            Constructor<PluginCommand> constructor = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
-            constructor.setAccessible(true);
-
-            PluginCommand command = constructor.newInstance(name, ExpBottle.instance);
-
-            command.setExecutor(executor);
-            command.setAliases(Lists.newArrayList(aliases));
-            if (executor instanceof TabCompleter) {
-                command.setTabCompleter((TabCompleter) executor);
-            }
-            ExpBottle.instance.getCommandMap().register("expbottle", command);
-        } catch (Exception e) {
+            getServer().getCommandMap().register( "expbottle", command );
+        } catch ( InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e ) {
+            //TODO: Implement logging
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onEnable() {
+        // Register event listener
+        getServer().getPluginManager().registerEvents( new ExpBottleListener( this ), this );
+
+        // Register command's executor and aliases
+        registerCommand();
     }
 
     private CommandMap getCommandMap() {
