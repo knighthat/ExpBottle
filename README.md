@@ -30,11 +30,11 @@ improve performance, and add more features.
     * Sub-commands
 - Changing bottle's display name
 
-# Issues/Support/Suggestion
+# Issues / Support / Suggestion
 
 > If you have any inquiry about original work, please contact [plugin's owner](https://github.com/SpillereNO/ExpBottle)
 
-Please visit [Issues](issues) page and open a ticket.
+Please visit [Issues](/issues) page and open a ticket.
 
 # License
 
