@@ -16,6 +16,7 @@ import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -109,10 +110,21 @@ public class ExpBottleListener implements Listener {
 
         Player player = event.getPlayer();
 
-        if ( item.getAmount() > 1 )
-            item.setAmount( item.getAmount() - 1 );
-        else
+        /*
+            Due to a bug (I think from Minecraft).
+            If you try to remove an item from off-hand,
+            it'll remove every item in the inventory
+            (EXCEPT the one on off-hand) that matches
+            the description.
+
+            This is just a temporal solution.
+            More robust testing and debugging are needed
+             to understand the root of this problem.
+         */
+        if ( event.getHand() == EquipmentSlot.HAND )
             player.getInventory().remove( item );
+        else
+            player.getInventory().setItem( EquipmentSlot.OFF_HAND, null );
 
         int exp = ExpData.extract( item.getItemMeta() );
         if ( exp > -1 )
