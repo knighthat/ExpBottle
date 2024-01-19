@@ -1,15 +1,53 @@
 prefix: '[&6Exp Bottle&r] '
 
-no_permission: '&cYou do not have the right permissions to execute this command.'
-admin_usage: '&aUse &r/expbottle <XP/All/Give/Reload> [Player] [XP] &ato withdraw or give XP. You currently have &r%playerxp% &aXP. There is a &r%tax%% &atax on all withdrawals.'
-user_usage: '&aUse &r/expbottle <XP/All> &ato withdraw experience. You currently have &r%playerxp% &aXP.'
-xp_insufficient: '&cYou do not have the sufficient experience. You need %taxprice% to withdraw %xp%'
-not_a_number: '&cXP must be a number.'
+#
+#   Predefined placeholders:
+#   %playername%              - Player's username
+#   %playerdisplayname%       - Player's custom nickname
+#   %receivername%            - Receiver's username
+#   %receiverdisplayname%     - Receiver's custom nickname
+#
+#   %playerxp%                - Current XP
+#   %minxp%                   - Lowest amount of XP can be withdrawn (configured in config.yml)
+#   %max%                     - Highest amount of XP can be withdrawn (configured in config.yml)
+#
+#   %xp%                      - The amount of XP will be withdrawn from player
+#   %tax%                     - Tax percentage
+#   %aftertax%                - The amount of XP player will receive (if tax is enabled)
+#
+#   NOTE:
+
+no_permission: '&cYou do not have permission to execute this command.'
+xp_insufficient: '&cYou do not have the sufficient experience. You need %xp% to withdraw. After tax, it''ll be %aftertax%. You have %playerxp%'
+not_a_number: '&cXP must be a number between %minxp% and %maxxp%.'
 out_of_range: '&cYou cant withdraw more than &r%maxxp% &cXP or less than &r%minxp% &cXP.'
-success: '&aYou successfully withdrew &r%xp% &aXP.'
+success: '&aYou successfully withdrew &r%xp% &aXP. You have &e%playerxp% &aXP left.'
 reload: '&aYou successfully reloaded the config.'
-give: '&aYou gave &r%receiverdisplayname% &aan XP Bottle with &r%xp% &aXP.'
-receive: '%playerdisplayname% &agave you an XP Bottle with &r%xp% &aXP.'
-self_give: '&aYou gave yourself an XP Bottle with &r%xp% &aXP.'
+give: '&aYou gave &r%receiverdisplayname% &c%xp% &d(%aftertax% &dafter tax)&a. You have &e%playerxp% &aXP left.'
+receive: '%playerdisplayname% &agave you an XP Bottle with &r%aftertax% &aXP.'
+self_give: '&aYou gave yourself an XP Bottle with &r%aftertax% &aXP. You have &e%playerxp% &aXP left.'
 player_not_found: '&cSpecified player is not online.'
 player_only: "&cOnly player can execute this command!"
+
+
+# %cmd% is the command's alias that the player uses
+usage:
+  main: "&c&bUsage: &e/%cmd% [amount]"
+  # 'all' sub-command
+  all: "&c&bUsage: &e/%cmd% all"
+  # 'give' sub-command
+  give: "&c&bUsage: &e/%cmd% give <player> <amount>"
+  # 'reload' sub-command (only 'expbottle.admin' permission holder can see this)
+  reload: "&c&bUsage: &e/%cmd% reload"
+
+
+help:
+  user:
+    - "&aAvailable commands:"
+    - "&7- &e/%cmd% give <player> <amount> - Give a player your XP."
+    - "&7- &e/%cmd% all - Extract all your XP into a bottle."
+  admin:
+    - "&aAvailable commands:"
+    - "&7- &e/%cmd% give <player> <amount> - Give a player your XP."
+    - "&7- &e/%cmd% all - Extract all your XP into a bottle."
+    - "&7- &e/%cmd% reload - Reload plugin."
