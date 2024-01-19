@@ -41,6 +41,7 @@ public class GiveCommand extends ExpCommand {
             Player target = Bukkit.getPlayer( args[1] );
             if ( target == null ) {
                 plugin.messages.send( player, MessageFile.PLAYER_NOT_FOUND );
+                return;
             } else
                 setReceiver( target );
 
