@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
 public class MessageFile extends PluginFile {
 
@@ -52,21 +53,32 @@ public class MessageFile extends PluginFile {
         return msg;
     }
 
-    private @NotNull String replaceXpPlaceHolders( @NotNull String message, int amount, int totalExp ) {
-        String msg = message;
+    private @NotNull String replaceXpPlaceHolders(
+            @NotNull String message,
+            @Range ( from = -1, to = Integer.MAX_VALUE ) int withdraw,
+            @Range ( from = -1, to = Integer.MAX_VALUE ) int afterTax,
+            @Range ( from = -1, to = Integer.MAX_VALUE ) int totalExp ) {
+        String msg = message.trim();
 
+        // Replace the lowest XP can be withdrawn
         String minXp = String.valueOf( plugin.config.getMin() );
         msg = msg.replace( "%minxp%", minXp );
 
+        // Replace the highest XP can be withdrawn
         String maxXp = String.valueOf( plugin.config.getMax() );
         msg = msg.replace( "%maxxp%", maxXp );
 
-        if ( amount >= 0 )
-            msg = msg.replace( "%xp%", String.valueOf( amount ) );
+        // Replace player's XP
         if ( totalExp >= 0 )
             msg = msg.replace( "%playerxp%", String.valueOf( totalExp ) );
-        if ( amount >= 0 && totalExp >= 0 )
-            msg = msg.replace( "%missingxp%", String.valueOf( amount - totalExp ) );
+
+        // Replace the amount of XP will be withdrawn from player
+        if ( withdraw >= 0 )
+            msg = msg.replace( "%xp%", String.valueOf( withdraw ) );
+
+        // Replace the amount XP will be put inside the bottle
+        if ( afterTax >= 0 )
+            msg = msg.replace( "%aftertax%", String.valueOf( afterTax ) );
 
         return msg;
     }
