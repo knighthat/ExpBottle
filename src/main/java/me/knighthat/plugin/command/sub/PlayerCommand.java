@@ -1,8 +1,7 @@
 package me.knighthat.plugin.command.sub;
 
 import me.brannstroom.expbottle.ExpBottle;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

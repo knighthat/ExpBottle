@@ -30,6 +30,8 @@ public class MessageFile extends PluginFile {
     public static final String SELF = "self_give";
     @NotNull
     public static final String PLAYER_NOT_FOUND = "player_not_found";
+    @NotNull
+    public static final String PLAYER_ONLY = "player_only";
 
     public MessageFile( @NotNull ExpBottle plugin ) { super( plugin, "messages" ); }
 
