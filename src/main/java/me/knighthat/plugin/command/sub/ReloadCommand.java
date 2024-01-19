@@ -17,9 +17,6 @@ public class ReloadCommand extends SubCommand {
     public @NotNull String getPermission() { return "admin"; }
 
     @Override
-    public boolean isPlayerCommand() { return false; }
-
-    @Override
     public void execute( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {
         plugin.config.reload();
         plugin.messages.reload();
