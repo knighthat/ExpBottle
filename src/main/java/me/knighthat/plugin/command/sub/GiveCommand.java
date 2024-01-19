@@ -27,7 +27,7 @@ public class GiveCommand extends ExpCommand {
 
         // "give" arg requires 2 additional arguments: player and amount
         if ( args.length < 3 ) {
-            printUsage( player );
+            printUsage( player, alias );
             return;
         }
 

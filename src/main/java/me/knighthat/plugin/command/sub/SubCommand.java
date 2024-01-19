@@ -1,7 +1,6 @@
 package me.knighthat.plugin.command.sub;
 
 import me.brannstroom.expbottle.ExpBottle;
-import me.brannstroom.expbottle.handlers.InfoKeeper;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
@@ -31,12 +30,11 @@ public abstract class SubCommand {
 
     public abstract void execute( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args );
 
-    public void printUsage( @NotNull Audience to ) {
-        String msg = InfoKeeper.cmdUsageUser;
-        if ( to instanceof Permissible && hasPermission( (Permissible) to ) )
-            msg = InfoKeeper.cmdUsageAdmin;
-
-        to.sendMessage( Component.text( msg ) );
+    public void printUsage( @NotNull Audience to, @NotNull String alias ) {
+        String path = "usage." + getName();
+        String message = plugin.messages.getMessage( path );
+        message = message.replace( "%cmd%", alias );
+        to.sendMessage( Component.text( message ) );
     }
 
     public boolean hasPermission( @NotNull Permissible permissible, @NotNull String permission ) {

@@ -29,6 +29,7 @@ public class DefaultXpCommand extends ExpCommand {
             action();
         } catch ( NumberFormatException e ) {
             plugin.messages.send( player, MessageFile.NOT_A_NUMBER );
+            printUsage( player, alias );
         }
     }
 }
