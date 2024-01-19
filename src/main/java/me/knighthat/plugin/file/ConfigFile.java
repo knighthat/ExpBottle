@@ -14,7 +14,9 @@ public class ConfigFile extends PluginFile {
 
     public @Range ( from = 0x0, to = Integer.MAX_VALUE ) int getMin() { return get().getInt( "minimum_exp", 0 ); }
 
-    public @Range ( from = 0x0, to = Integer.MAX_VALUE ) int getMax() { return get().getInt( "maximum_exp", Integer.MAX_VALUE ); }
+    public @Range ( from = 0x0, to = Integer.MAX_VALUE ) int getMax() {
+        return get().getInt( "maximum_exp", 9999 );
+    }
 
     public boolean isTaxEnabled() { return get().getBoolean( "tax", false ); }
 
