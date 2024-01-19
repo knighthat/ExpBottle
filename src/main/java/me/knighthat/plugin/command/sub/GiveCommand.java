@@ -19,7 +19,7 @@ public class GiveCommand extends ExpCommand {
     protected @NotNull String giverMessagePath() { return giver != receiver ? MessageFile.GIVE : MessageFile.SELF; }
 
     @Override
-    protected @Nullable String receiverMessagePath() { return MessageFile.RECEIVE; }
+    protected @Nullable String receiverMessagePath() { return giver != receiver ? MessageFile.RECEIVE : null; }
 
     @Override
     public void execute( @NotNull Player player, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {
