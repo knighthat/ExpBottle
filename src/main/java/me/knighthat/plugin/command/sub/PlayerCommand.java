@@ -15,9 +15,6 @@ public abstract class PlayerCommand extends SubCommand {
     public abstract void execute( @NotNull Player player, @NotNull Command command, @NotNull String alias, @NotNull String[] args );
 
     @Override
-    public boolean isPlayerCommand() { return true; }
-
-    @Override
     public void execute( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {
         if ( !( sender instanceof Player ) ) {
             String msg = "Only player can execute this command!";

@@ -24,8 +24,6 @@ public abstract class SubCommand {
 
     public abstract @NotNull String getPermission();
 
-    public abstract boolean isPlayerCommand();
-
     public @NotNull Collection<String> getAliases() {
         String path = "aliases." + getName();
         return plugin.config.get().getStringList( path );
