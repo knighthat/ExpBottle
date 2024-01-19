@@ -15,7 +15,6 @@ prefix: '[&6Exp Bottle&r] '
 #   %tax%                     - Tax percentage
 #   %aftertax%                - The amount of XP player will receive (if tax is enabled)
 #
-#   NOTE:
 
 no_permission: '&cYou do not have permission to execute this command.'
 xp_insufficient: '&cYou do not have the sufficient experience. You need %xp% to withdraw. After tax, it''ll be %aftertax%. You have %playerxp%'
