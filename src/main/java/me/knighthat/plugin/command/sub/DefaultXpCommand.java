@@ -14,7 +14,7 @@ public class DefaultXpCommand extends ExpCommand {
     public DefaultXpCommand( ExpBottle plugin ) { super( plugin ); }
 
     @Override
-    public @NotNull String getName() { return ""; }
+    public @NotNull String getName() { return "main"; }
 
     @Override
     public @NotNull Collection<String> getAliases() { return List.of(); }
