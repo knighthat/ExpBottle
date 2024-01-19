@@ -30,11 +30,49 @@ improve performance, and add more features.
     * Sub-commands
 - Changing bottle's display name
 
+## Commands
+
+> Usage: /expbottle <sub-command>
+
+Available sub-commands:
+
+- `give <player> <amount>`: Give specified player your XP.
+- `all`: Extract all XP.
+- `<amount>`: Extract a specific amount of XP.
+- `reload`: Reload plugin.
+
+## Permissions
+
+| Permission          | Description                                          | 
+|---------------------|------------------------------------------------------|
+| expbottle.user      | 'give', 'all', and to withdraw specific amount of XP |
+| expbottle.admin     | allows 'reload'                                      |
+| expbottle.bypasstax | pays zero tax when withdraw                          |
+
+## Placeholders (messages.yml)
+
+| Placeholder           | Description                                                      | 
+|-----------------------|------------------------------------------------------------------|
+| %playername%          | Player's username                                                |
+| %playerdisplayname%   | Player's custom nickname                                         |
+| %receivername%        | Receiver's username                                              |
+| %receiverdisplayname% | Receiver's custom nickname                                       |
+|                       |                                                                  |
+| %playerxp%            | Player's current XP                                              |
+| %minxp%               | Lowest amount of XP can be withdrawn (configured in config.yml)  |
+| %max%                 | Highest amount of XP can be withdrawn (configured in config.yml) |
+|                       |                                                                  |
+| %xp%                  | The amount of XP will be withdrawn from player                   |
+| %tax%                 | Tax percentage                                                   |
+| %aftertax%            | The amount of XP player will receive (if tax is enabled)         |
+
+**In help and usage messages. `%cmd%` will be replaced by the command that the player used to execute**
+
 # Issues / Support / Suggestion
 
-> If you have any inquiry about original work, please contact [plugin's owner](https://github.com/SpillereNO/ExpBottle)
+> If you have any inquiry about the original work, please contact [plugin's owner](https://github.com/SpillereNO/ExpBottle)
 
-Please visit [Issues](/issues) page and open a ticket.
+Please visit [Issues](https://github.com/knighthat/ExpBottle/issues) page and open a ticket.
 
 # License
 
