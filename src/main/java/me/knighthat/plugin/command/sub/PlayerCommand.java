@@ -16,13 +16,9 @@ public abstract class PlayerCommand extends SubCommand {
 
     @Override
     public void execute( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {
-        if ( !( sender instanceof Player ) ) {
-            String msg = "Only player can execute this command!";
-            TextColor color = TextColor.fromHexString( "#cc0000" );
-
-            Component comp = Component.text( msg ).color( color );
-            sender.sendMessage( comp );
-        } else
+        if ( !( sender instanceof Player ) )
+            plugin.messages.send( sender, MessageFile.PLAYER_ONLY );
+        else
             execute( (Player) sender, command, alias, args );
     }
 }

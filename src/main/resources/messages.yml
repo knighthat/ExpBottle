@@ -12,3 +12,4 @@ give: '&aYou gave &r%receiverdisplayname% &aan XP Bottle with &r%xp% &aXP.'
 receive: '%playerdisplayname% &agave you an XP Bottle with &r%xp% &aXP.'
 self_give: '&aYou gave yourself an XP Bottle with &r%xp% &aXP.'
 player_not_found: '&cSpecified player is not online.'
+player_only: "&cOnly player can execute this command!"
