@@ -50,7 +50,6 @@ public class ExperienceBottle extends ItemStack {
         // Replace XP values
         text = text.replace( "%xp%", String.valueOf( exp ) );
         text = text.replace( "%playerxp%", String.valueOf( totalExp ) );
-        text = text.replace( "%missingxp%", String.valueOf( exp - totalExp ) );
 
         return text;
     }
