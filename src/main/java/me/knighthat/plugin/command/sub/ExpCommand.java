@@ -87,16 +87,16 @@ public abstract class ExpCommand extends PlayerCommand {
 
         // If exp is insufficient, send a message
         if ( withdrawAmount > giverTotalExp ) {
-            plugin.messages.send( giver, MessageFile.INSUFFICIENT );
+            plugin.messages.send( giver, MessageFile.INSUFFICIENT, giver, receiver, withdrawAmount, toBottleAmount );
             return;
         }
 
         giveBottle( receiver, toBottleAmount );
         ExpCalculator.take( giver, withdrawAmount );
 
-        plugin.messages.send( giver, giverMessagePath(), giver, receiver, toBottleAmount, giverTotalExp );
+        plugin.messages.send( giver, giverMessagePath(), giver, receiver, withdrawAmount, toBottleAmount );
         if ( receiverMessagePath() != null )
-            plugin.messages.send( receiver, receiverMessagePath(), giver, receiver, toBottleAmount, giverTotalExp );
+            plugin.messages.send( receiver, receiverMessagePath(), giver, receiver, toBottleAmount, toBottleAmount );
     }
 
     public void setWithdrawAmount( @Range ( from = 0x0, to = Integer.MAX_VALUE ) int amount ) { this.withdrawAmount = amount; }
