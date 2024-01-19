@@ -1,6 +1,7 @@
 package me.knighthat.plugin.file;
 
 import me.brannstroom.expbottle.ExpBottle;
+import me.knighthat.plugin.ExpCalculator;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -38,7 +39,7 @@ public class MessageFile extends PluginFile {
 
     @SuppressWarnings ( { "deprecation" } )
     private @NotNull String replacePlayerPlaceHolders( @NotNull String message, @Nullable Player giver, @Nullable Player receiver ) {
-        String msg = message;
+        String msg = message.trim();
 
         if ( giver != null ) {
             msg = msg.replace( "%playername%", giver.getName() );
@@ -83,6 +84,11 @@ public class MessageFile extends PluginFile {
         return msg;
     }
 
+    private @NotNull String replaceTaxPlaceHolders( @NotNull String message ) {
+        int tax = (int) plugin.config.getTaxAmount();
+        return message.trim().replace( "%tax%", String.valueOf( tax ) );
+    }
+
     public @NotNull String getPrefix() {
         return get().getString( "prefix", "[&6Exp Bottle%r] " );
     }
@@ -93,10 +99,31 @@ public class MessageFile extends PluginFile {
         return ChatColor.translateAlternateColorCodes( '&', message );
     }
 
-    public void send( @NotNull Audience to, @NotNull String path, @Nullable Player giver, @Nullable Player taker, int amount, int totalExp ) {
+    /**
+     * This method replaces all placeholders (if applicable)
+     * then converts it into {@link Component} before sending
+     * the message to {@link Audience}.
+     *
+     * @param to       who will receive this message
+     * @param path     where in the message.yml file
+     * @param giver    command executor ('null' to skip)
+     * @param receiver who will get the bottle ('null' to skip)
+     * @param withdraw XP to withdraw from 'giver' (-1 to skip)
+     * @param afterTax XP to put inside the bottle (-1 to skip)
+     */
+    public void send(
+            @NotNull Audience to,
+            @NotNull String path,
+            @Nullable Player giver,
+            @Nullable Player receiver,
+            @Range ( from = -1, to = Integer.MAX_VALUE ) int withdraw,
+            @Range ( from = -1, to = Integer.MAX_VALUE ) int afterTax ) {
+        int totalExp = giver == null ? -1 : ExpCalculator.total( giver );
+
         String message = getMessage( path );
-        message = replacePlayerPlaceHolders( message, giver, taker );
-        message = replaceXpPlaceHolders( message, amount, totalExp );
+        message = replaceXpPlaceHolders( message, withdraw, afterTax, totalExp );
+        message = replacePlayerPlaceHolders( message, giver, receiver );
+        message = replaceTaxPlaceHolders( message );
 
         to.sendMessage( Component.text( message ) );
     }
