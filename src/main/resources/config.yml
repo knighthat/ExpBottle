@@ -38,3 +38,5 @@ aliases:
   # Sub-command "reload"
   reload:
     - rel
+  help:
+    - h

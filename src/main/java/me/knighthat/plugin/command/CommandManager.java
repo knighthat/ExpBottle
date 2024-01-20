@@ -3,9 +3,6 @@ package me.knighthat.plugin.command;
 import me.brannstroom.expbottle.ExpBottle;
 import me.knighthat.plugin.command.sub.*;
 import me.knighthat.plugin.file.MessageFile;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,6 +29,7 @@ public class CommandManager implements CommandExecutor {
         subCommandList.add( new ReloadCommand( plugin ) );
         subCommandList.add( new AllCommand( plugin ) );
         subCommandList.add( new GiveCommand( plugin ) );
+        subCommandList.add( new HelpCommand( plugin ) );
         defaultSubCommand = new DefaultXpCommand( plugin );
     }
 
@@ -46,26 +44,9 @@ public class CommandManager implements CommandExecutor {
 
     @Override
     public boolean onCommand( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args ) {
-        if ( args.length == 0 ) {
-
-            // Decide whether sender is an admin or just a normie
-            String path = sender.isOp() || sender.hasPermission( "expbottle.admin" ) ? "admin" : "user";
-            path = "help." + path;
-
-            // Build the message line by line. Plus, replacing all %cmd% with the alias
-            TextComponent.Builder builder = Component.text();
-            for ( String line : plugin.messages.get().getStringList( path ) ) {
-
-                // Replace %cmd% with alias and add prefix to the beginning.
-                String completeLine = plugin.messages.getPrefix() + line.replace( "%cmd%", alias );
-                Component colorized = LegacyComponentSerializer.legacyAmpersand().deserialize( completeLine );
-                builder.append( colorized );
-                builder.appendNewline();
-            }
-
-            sender.sendMessage( builder.asComponent() );
-            return true;
-        }
+        // If no argument provided, default first arg to 'help' to print help;
+        if ( args.length == 0 )
+            args = new String[]{ "help" };
 
         /*
             Due to the flexibility of the first argument (can either be a sub-command or a number).
