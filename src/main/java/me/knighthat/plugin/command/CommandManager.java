@@ -30,6 +30,7 @@ public class CommandManager implements CommandExecutor {
         subCommandList.add( new AllCommand( plugin ) );
         subCommandList.add( new GiveCommand( plugin ) );
         subCommandList.add( new HelpCommand( plugin ) );
+        subCommandList.add( new BalanceCommand( plugin ) );
         defaultSubCommand = new DefaultXpCommand( plugin );
     }
 

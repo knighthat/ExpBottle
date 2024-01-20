@@ -40,3 +40,5 @@ aliases:
     - rel
   help:
     - h
+  balance:
+    - bal

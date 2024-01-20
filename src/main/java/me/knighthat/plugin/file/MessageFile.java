@@ -34,6 +34,10 @@ public class MessageFile extends PluginFile {
     public static final String PLAYER_NOT_FOUND = "player_not_found";
     @NotNull
     public static final String PLAYER_ONLY = "player_only";
+    @NotNull
+    public static final String BALANCE_SELF = "balance_self";
+    @NotNull
+    public static final String BALANCE_OTHER = "balance_other";
 
     public MessageFile( @NotNull ExpBottle plugin ) { super( plugin, "messages" ); }
 

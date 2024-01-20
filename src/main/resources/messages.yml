@@ -27,6 +27,8 @@ receive: '%playerdisplayname% &agave you an XP Bottle with &r%aftertax% &aXP.'
 self_give: '&aYou gave yourself an XP Bottle with &r%aftertax% &aXP. You have &e%playerxp% &aXP left.'
 player_not_found: '&cSpecified player is not online.'
 player_only: "&cOnly player can execute this command!"
+balance_self: "&aYou currently have %playerxp% XP."
+balance_other: "&aPlayer %playerdisplayname% currently has %playerxp%."
 
 
 # %cmd% is the command's alias that the player uses
@@ -38,6 +40,8 @@ usage:
   give: "&c&bUsage: &e/%cmd% give <player> <amount>"
   # 'reload' sub-command (only 'expbottle.admin' permission holder can see this)
   reload: "&c&bUsage: &e/%cmd% reload"
+  # 'balance' sub-command
+  balance: "&c&bUsage: &e/%cmd% balance"
 
 
 help:
