@@ -1,0 +1,79 @@
+on:
+  release:
+    types: [ released ]
+
+env:
+  OUTPUT_FOLDER: target
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    # The output of step 'version' is stored here
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+    - name: Download code
+      uses: actions/checkout@v3
+
+    - name: Setup JVM
+      uses: action/setup-java@3.12.0
+      with:
+        java-version: '11'
+        distribution: temurin
+        cache: 'maven'
+
+    - name: Compile To JAR File
+      run: mvn -B validate package
+
+    # List all files inside 'target' folder
+    - name: Check Compiled File
+      run: ls -lAh ./target/
+
+    # xmllint allows streams and extracts content of an element inside '.xml' file
+    - name: Install xmllint
+      run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
+    # Check installed version (For debug)
+    - name: Check xmllint Version
+      run: xmllint --version
+
+    # Use xmllint and get the value of '<version>' element inside pom.xml,
+    # then assign it to GITHUB_OUTPUT variable for the next job to use.
+    - name: "Acquire Plugin's Version"
+      id: version
+      run: echo "version=$(xmllint --xpath "//*[local-name()='project']/*[local-name()='version']/text()" pom.xml)" >> $GITHUB_OUTPUT
+
+    # Upload '.jar' file so that the next job can download it for further processing.
+    - name: Upload JAR
+      uses: actions/upload-artifact@v3
+      with:
+        name: compiled
+        path: ./target/*.jar
+
+  # This job uploads '.jar' file to the release tab
+  upload:
+    runs-on: ubuntu-latest
+    needs: compile
+
+    steps:
+    # Download uploaded '.jar' file
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+
+    # Github CLI allows workflows to modify releases
+    - name: Login Into Github CLIj
+      run: echo ${{ secrets.TEMP_TOKEN }} | gh auth login --with-token
+
+    - name: Get Release Tag
+      id: tag
+      run: |
+        RELEASE_URL=${{ env.EXPBOTTLE_REPO }}
+        
+        curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$RELEASE_URL" >> releases.txt
+        
+        echo "release_tag=$(cat releases.txt | jq -r '.tag_name')" >> $GITHUB_OUTPUT
+
+    - name: Publish Artifacts to Release
+      run: gh release upload ${{ steps.tag.outputs.release_tag }} compiled/* -R knighthat/ExpBottle
