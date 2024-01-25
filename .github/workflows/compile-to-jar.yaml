@@ -71,7 +71,7 @@ jobs:
       run: |
         RELEASE_URL=${{ env.EXPBOTTLE_REPO }}
         
-        curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$RELEASE_URL" >> releases.txt
+        curl -s -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" "$RELEASE_URL" >> releases.txt
         
         echo "release_tag=$(cat releases.txt | jq -r '.tag_name')" >> $GITHUB_OUTPUT
 
