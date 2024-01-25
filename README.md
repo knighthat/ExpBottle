@@ -7,8 +7,7 @@ Withdraw your XP into bottles
 
 # Description
 
-This is the forked version of [ExpBottle](https://www.spigotmc.org/resources/98763/) aiming to fix bugs,
-improve performance, and add more features.
+This is the forked version of [ExpBottle](https://www.spigotmc.org/resources/98763/) aiming to fix bugs, improve performance, and add more features.
 
 ## What I have done
 
@@ -26,8 +25,8 @@ improve performance, and add more features.
 - Give a player your Experience Points.
 - Supports dispensers.
 - Custom aliases:
-    * Main command
-    * Sub-commands
+  * Main command
+  * Sub-commands
 - Changing bottle's display name
 
 ## Commands
@@ -40,6 +39,8 @@ Available sub-commands:
 - `all`: Extract all XP.
 - `<amount>`: Extract a specific amount of XP.
 - `reload`: Reload plugin.
+- `balance`: Show total EXP.
+- `help`: Show available commands.
 
 ## Permissions
 
@@ -48,6 +49,7 @@ Available sub-commands:
 | expbottle.user      | 'give', 'all', and to withdraw specific amount of XP |
 | expbottle.admin     | allows 'reload'                                      |
 | expbottle.bypasstax | pays zero tax when withdraw                          |
+| expbottle.balance   | required to execute 'balance' command                |
 
 ## Placeholders (messages.yml)
 
