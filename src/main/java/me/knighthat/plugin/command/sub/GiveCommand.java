@@ -1,6 +1,7 @@
 package me.knighthat.plugin.command.sub;
 
 import me.brannstroom.expbottle.ExpBottle;
+import me.knighthat.plugin.ExpCalculator;
 import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -31,23 +32,37 @@ public class GiveCommand extends ExpCommand {
             return;
         }
 
-        // Convert the third argument to amount of XP
-        // and give you player indicated in the second argument
+        /*
+         * Convert the third argument to amount of XP
+         * and give you player indicated in the second argument
+         */
+        int withdrawAmount;
         try {
-            setWithdrawAmount( Integer.parseInt( args[2] ) );
-
-            // Verify if indicated player is online and
-            // check for empty slot in said player's inventory.
-            Player target = Bukkit.getPlayer( args[1] );
-            if ( target == null ) {
-                plugin.messages.send( player, MessageFile.PLAYER_NOT_FOUND );
-                return;
+            /*
+             * If the number ends with the 'l' letter.
+             * We convert the number before that from
+             * level to EXP and add to withdrawAmount.
+             */
+            if ( args[2].toLowerCase().endsWith( "l" ) ) {
+                String noL = args[2].substring( 0, args[2].length() - 1 );
+                int level = Integer.parseInt( noL );
+                withdrawAmount = ExpCalculator.at( level );
             } else
-                setReceiver( target );
-
-            action();
+                withdrawAmount = Integer.parseInt( args[2] );
         } catch ( NumberFormatException e ) {
             plugin.messages.send( player, MessageFile.NOT_A_NUMBER );
+            printUsage( player, alias );
+            return;
         }
+        setWithdrawAmount( withdrawAmount );
+
+        Player target = Bukkit.getPlayer( args[1] );
+        if ( target == null ) {
+            plugin.messages.send( player, MessageFile.PLAYER_NOT_FOUND );
+            return;
+        }
+        setReceiver( target );
+
+        action();
     }
 }

@@ -1,6 +1,7 @@
 package me.knighthat.plugin.command.sub;
 
 import me.brannstroom.expbottle.ExpBottle;
+import me.knighthat.plugin.ExpCalculator;
 import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -24,12 +25,26 @@ public class DefaultXpCommand extends ExpCommand {
         setGiver( player );
         setReceiver( player );
 
+        int withdrawAmount;
         try {
-            setWithdrawAmount( Integer.parseInt( args[0] ) );
-            action();
+            /*
+             * If the number ends with the 'l' letter.
+             * We convert the number before that from
+             * level to EXP and add to withdrawAmount.
+             */
+            if ( args[0].toLowerCase().endsWith( "l" ) ) {
+                String noL = args[0].substring( 0, args[0].length() - 1 );
+                int level = Integer.parseInt( noL );
+                withdrawAmount = ExpCalculator.at( level );
+            } else
+                withdrawAmount = Integer.parseInt( args[0] );
         } catch ( NumberFormatException e ) {
             plugin.messages.send( player, MessageFile.NOT_A_NUMBER );
             printUsage( player, alias );
+            return;
         }
+
+        setWithdrawAmount( withdrawAmount );
+        action();
     }
 }

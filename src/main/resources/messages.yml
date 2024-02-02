@@ -33,11 +33,11 @@ balance_other: "&aPlayer %playerdisplayname% currently has %playerxp%."
 
 # %cmd% is the command's alias that the player uses
 usage:
-  main: "&c&bUsage: &e/%cmd% [amount]"
+  main: "&c&bUsage: &e/%cmd% [amount]L"
   # 'all' sub-command
   all: "&c&bUsage: &e/%cmd% all"
   # 'give' sub-command
-  give: "&c&bUsage: &e/%cmd% give <player> <amount>"
+  give: "&c&bUsage: &e/%cmd% give <player> <amount>L"
   # 'reload' sub-command (only 'expbottle.admin' permission holder can see this)
   reload: "&c&bUsage: &e/%cmd% reload"
   # 'balance' sub-command
@@ -46,11 +46,13 @@ usage:
 
 help:
   user:
-    - "&aAvailable commands:"
-    - "&7- &e/%cmd% give <player> <amount> - Give a player your XP."
-    - "&7- &e/%cmd% all - Extract all your XP into a bottle."
+  - "&aAvailable commands:"
+  - "&7- &e/%cmd% <amount>L - Withdraw your XP into a bottle."
+  - "&7- &e/%cmd% give <player> <amount>L - Give a player your XP."
+  - "&7- &e/%cmd% all - Extract all your XP into a bottle."
   admin:
-    - "&aAvailable commands:"
-    - "&7- &e/%cmd% give <player> <amount> - Give a player your XP."
-    - "&7- &e/%cmd% all - Extract all your XP into a bottle."
-    - "&7- &e/%cmd% reload - Reload plugin."
+  - "&aAvailable commands:"
+  - "&7- &e/%cmd% <amount>L - Withdraw your XP into a bottle."
+  - "&7- &e/%cmd% give <player> <amount>L - Give a player your XP."
+  - "&7- &e/%cmd% all - Extract all your XP into a bottle."
+  - "&7- &e/%cmd% reload - Reload plugin."
