@@ -19,7 +19,7 @@ prefix: '[&6Exp Bottle&r] '
 no_permission: '&cYou do not have permission to execute this command.'
 xp_insufficient: '&cYou do not have the sufficient experience. You need %xp% to withdraw. After tax, it''ll be %aftertax%. You have %playerxp%'
 not_a_number: '&cXP must be a number between %minxp% and %maxxp%.'
-out_of_range: '&cYou cant withdraw more than &r%maxxp% &cXP or less than &r%minxp% &cXP.'
+out_of_range: "&cYou can't withdraw more than &r%maxxp% &cXP or less than &r%minxp% &cXP."
 success: '&aYou successfully withdrew &r%xp% &aXP. You have &e%playerxp% &aXP left.'
 reload: '&aYou successfully reloaded the config.'
 give: '&aYou gave &r%receiverdisplayname% &c%xp% &d(%aftertax% &dafter tax)&a. You have &e%playerxp% &aXP left.'
