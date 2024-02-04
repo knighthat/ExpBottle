@@ -5,9 +5,12 @@ import me.knighthat.plugin.ExpCalculator;
 import me.knighthat.plugin.bottle.ExperienceBottle;
 import me.knighthat.plugin.file.MessageFile;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
+
+import java.util.Map;
 
 public abstract class ExpCommand extends PlayerCommand {
 
@@ -54,12 +57,32 @@ public abstract class ExpCommand extends PlayerCommand {
         bottle.setDisplayName( plugin.config.getBottleName() );
         bottle.setLore( plugin.config.getBottleLore() );
 
-        int firstEmpty = to.getInventory().firstEmpty();
-        // -1 means no empty slot, any other positive number is an empty slot
-        if ( firstEmpty > -1 )
-            to.getInventory().setItem( firstEmpty, bottle );
-        else
-            to.getWorld().dropItemNaturally( to.getLocation(), bottle );
+        /*
+         * Inventory#addItem() will attempt to add provided item(s) to provided player.
+         * If no match is found in the player's inventory, it'll put that item to a map,
+         * and return it after going through all item(s).
+         *
+         * However, this method excludes the offhand slot, meaning; even the player
+         * is holding the exact bottle; it won't add this bottle to that slot
+         */
+        Map<Integer, ItemStack> leftOvers = to.getInventory().addItem( bottle );
+        /*
+         * This piece ensures that for each "left-over" item
+         * gets checked against offhand slot.
+         * If it's not similar, we drop the item on the ground
+         */
+        ItemStack offHand = to.getInventory().getItemInOffHand();
+        for (ItemStack item : leftOvers.values())
+            /*
+             * Do NOT use ItemStack#equals() because the item from the server
+             * is NMS CraftItem, which is completely different from ItemStack.
+             * ItemStack#isSimilar() compares its properties such as material,
+             * amount, ItemMeta, etc.
+             */
+            if ( item.isSimilar( to.getInventory().getItemInOffHand() ) )
+                offHand.setAmount( offHand.getAmount() + item.getAmount() );
+            else
+                to.getWorld().dropItem( to.getLocation(), item );
     }
 
     protected @NotNull String giverMessagePath() { return MessageFile.SUCCESS; }
@@ -95,6 +118,7 @@ public abstract class ExpCommand extends PlayerCommand {
 
         giveBottle( receiver, toBottleAmount );
         ExpCalculator.take( giver, withdrawAmount );
+        receiver.updateInventory();
 
         plugin.messages.send( giver, giverMessagePath(), giver, receiver, withdrawAmount, toBottleAmount );
         if ( receiverMessagePath() != null )
