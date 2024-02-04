@@ -13,35 +13,37 @@ import org.jetbrains.annotations.Range;
 public class MessageFile extends PluginFile {
 
     @NotNull
-    public static final String NO_PERMISSION = "no_permission";
+    public static final String NO_PERMISSION    = "no_permission";
     @NotNull
-    public static final String INSUFFICIENT = "xp_insufficient";
+    public static final String INSUFFICIENT     = "xp_insufficient";
     @NotNull
-    public static final String NOT_A_NUMBER = "not_a_number";
+    public static final String NOT_A_NUMBER     = "not_a_number";
     @NotNull
-    public static final String OUT_OF_RANGE = "out_of_range";
+    public static final String OUT_OF_RANGE     = "out_of_range";
     @NotNull
-    public static final String SUCCESS = "success";
+    public static final String SUCCESS          = "success";
     @NotNull
-    public static final String RELOAD = "reload";
+    public static final String RELOAD           = "reload";
     @NotNull
-    public static final String GIVE = "give";
+    public static final String GIVE             = "give";
     @NotNull
-    public static final String RECEIVE = "receive";
+    public static final String RECEIVE          = "receive";
     @NotNull
-    public static final String SELF = "self_give";
+    public static final String SELF             = "self_give";
     @NotNull
     public static final String PLAYER_NOT_FOUND = "player_not_found";
     @NotNull
-    public static final String PLAYER_ONLY = "player_only";
+    public static final String PLAYER_ONLY      = "player_only";
     @NotNull
-    public static final String BALANCE_SELF = "balance_self";
+    public static final String BALANCE_SELF     = "balance_self";
     @NotNull
-    public static final String BALANCE_OTHER = "balance_other";
+    public static final String BALANCE_OTHER    = "balance_other";
+    @NotNull
+    public static final String FOR_COMMAND      = "for_command";
 
     public MessageFile( @NotNull ExpBottle plugin ) { super( plugin, "messages" ); }
 
-    @SuppressWarnings ( { "deprecation" } )
+    @SuppressWarnings( { "deprecation" } )
     private @NotNull String replacePlayerPlaceHolders( @NotNull String message, @Nullable Player giver, @Nullable Player receiver ) {
         String msg = message.trim();
 
@@ -60,9 +62,9 @@ public class MessageFile extends PluginFile {
 
     private @NotNull String replaceXpPlaceHolders(
             @NotNull String message,
-            @Range ( from = -1, to = Integer.MAX_VALUE ) int withdraw,
-            @Range ( from = -1, to = Integer.MAX_VALUE ) int afterTax,
-            @Range ( from = -1, to = Integer.MAX_VALUE ) int totalExp ) {
+            @Range( from = -1, to = Integer.MAX_VALUE ) int withdraw,
+            @Range( from = -1, to = Integer.MAX_VALUE ) int afterTax,
+            @Range( from = -1, to = Integer.MAX_VALUE ) int totalExp ) {
         String msg = message.trim();
 
         // Replace the lowest XP can be withdrawn
@@ -97,7 +99,7 @@ public class MessageFile extends PluginFile {
         return get().getString( "prefix", "[&6Exp Bottle%r] " );
     }
 
-    @SuppressWarnings ( "deprecation" )
+    @SuppressWarnings( "deprecation" )
     public @NotNull String getMessage( @NotNull String path ) {
         String message = getPrefix() + get().getString( path, "" );
         return ChatColor.translateAlternateColorCodes( '&', message );
@@ -120,8 +122,8 @@ public class MessageFile extends PluginFile {
             @NotNull String path,
             @Nullable Player giver,
             @Nullable Player receiver,
-            @Range ( from = -1, to = Integer.MAX_VALUE ) int withdraw,
-            @Range ( from = -1, to = Integer.MAX_VALUE ) int afterTax ) {
+            @Range( from = -1, to = Integer.MAX_VALUE ) int withdraw,
+            @Range( from = -1, to = Integer.MAX_VALUE ) int afterTax ) {
         int totalExp = giver == null ? -1 : ExpCalculator.total( giver );
 
         String message = getMessage( path );

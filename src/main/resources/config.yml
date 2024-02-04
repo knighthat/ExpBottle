@@ -17,8 +17,8 @@ tax_amount: 0.1
 bottle:
   name: '&aXP Bottle'
   lore:
-    - '&9Creator: &r%playerdisplayname%'
-    - '&9XP: &a%xp%'
+  - '&9Creator: &r%playerdisplayname%'
+  - '&9XP: &a%xp%'
 
 # Leave empty if you don't want any aliases
 aliases:
@@ -26,19 +26,21 @@ aliases:
   # Any changes of main command require
   # server restart.
   main:
-    - xpbottle
-    - xpb
-    - xb
+  - xpbottle
+  - xpb
+  - xb
   # Sub-command "give"
   give:
-    - i
+  - i
   # Sub-command "all"
   all:
-    - everything
+  - everything
   # Sub-command "reload"
   reload:
-    - rel
+  - rel
   help:
-    - h
+  - h
   balance:
-    - bal
+  - bal
+  for:
+  - need

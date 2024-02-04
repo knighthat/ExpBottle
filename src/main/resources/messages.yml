@@ -29,6 +29,7 @@ player_not_found: '&cSpecified player is not online.'
 player_only: "&cOnly player can execute this command!"
 balance_self: "&aYou currently have %playerxp% XP."
 balance_other: "&aPlayer %playerdisplayname% currently has %playerxp%."
+for_command: "&bTo create a bottle of &f%aftertax%&b, you'll need &f%xp%&b. You have &e%playerxp%"
 
 
 # %cmd% is the command's alias that the player uses
@@ -42,6 +43,8 @@ usage:
   reload: "&c&bUsage: &e/%cmd% reload"
   # 'balance' sub-command
   balance: "&c&bUsage: &e/%cmd% balance"
+  # 'for' sub-command
+  for: "&c&bUsage: &e/%cmd% for <level>"
 
 
 help:
