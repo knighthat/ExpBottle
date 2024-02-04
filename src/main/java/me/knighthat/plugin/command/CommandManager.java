@@ -31,6 +31,7 @@ public class CommandManager implements CommandExecutor {
         subCommandList.add( new GiveCommand( plugin ) );
         subCommandList.add( new HelpCommand( plugin ) );
         subCommandList.add( new BalanceCommand( plugin ) );
+        subCommandList.add( new ForCommand( plugin ) );
         defaultSubCommand = new DefaultXpCommand( plugin );
     }
 
@@ -64,14 +65,14 @@ public class CommandManager implements CommandExecutor {
           temporarily and won't reflect changes to the original object.
          */
         Iterator<SubCommand> subCommands = subCommandList.iterator();
-        while ( subCommands.hasNext() ) {
+        while (subCommands.hasNext()) {
             SubCommand sub = subCommands.next();
 
             // If the first arg (sub command) doesn't match with command's name,
             // then check if it falls into one of the aliases.
             // If both are failed, then move to the next sub-command.
             if ( !sub.getName().equalsIgnoreCase( args[0] ) &&
-                    !sub.getAliases().contains( args[0] ) )
+                 !sub.getAliases().contains( args[0] ) )
                 continue;
 
             execute( sub, sender, command, alias, args );
