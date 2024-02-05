@@ -31,10 +31,12 @@ public class ExpBottle extends JavaPlugin {
             constructor.setAccessible( true );
 
             PluginCommand command = constructor.newInstance( "expbottle", this );
+            CommandManager cmdManager = new CommandManager( this );
 
             // Set executor and its aliases from config.yml
-            command.setExecutor( new CommandManager( this ) );
+            command.setExecutor( cmdManager );
             command.setAliases( config.get().getStringList( "aliases.main" ) );
+            command.setTabCompleter( cmdManager );
 
             getServer().getCommandMap().register( "expbottle", command );
         } catch ( InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e ) {

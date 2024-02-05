@@ -44,3 +44,9 @@ aliases:
   - bal
   for:
   - need
+
+# Should the plugin suggest some XP values when
+# a player is at first argument of a command suggestion?
+# For example, if true, this plugin will suggest [1, 1L, 2, 2L, etc.]
+# when player type '/expbottle ' command.
+xp_suggestion: true
