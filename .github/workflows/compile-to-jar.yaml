@@ -3,7 +3,7 @@ on:
     types: [ released ]
 
 env:
-  OUTPUT_FOLDER: target
+  OUTPUT_FOLDER: "./target"
 
 jobs:
   compile:
@@ -22,7 +22,6 @@ jobs:
       with:
         java-version: '17'
         distribution: temurin
-        cache: 'maven'
 
     - name: Compile To JAR File
       run: mvn -B validate package
