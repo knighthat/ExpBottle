@@ -68,9 +68,7 @@ jobs:
     - name: Get Release Tag
       id: tag
       run: |
-        RELEASE_URL=${{ vars.EXPBOTTLE_REPO }}
-        
-        curl -s -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" "$RELEASE_URL" >> releases.txt
+        curl -s -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" "${{ vars.EXPBOTTLE_REPO }}" >> releases.txt
         
         echo "release_tag=$(cat releases.txt | jq -r '.tag_name')" >> $GITHUB_OUTPUT
 
