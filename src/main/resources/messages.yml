@@ -34,17 +34,17 @@ for_command: "&bTo create a bottle of &f%aftertax%&b, you'll need &f%xp%&b. You 
 
 # %cmd% is the command's alias that the player uses
 usage:
-  main: "&c&bUsage: &e/%cmd% [amount]L"
+  main: "&c&lUsage: &e/%cmd% [amount]L"
   # 'all' sub-command
-  all: "&c&bUsage: &e/%cmd% all"
+  all: "&c&lUsage: &e/%cmd% all"
   # 'give' sub-command
-  give: "&c&bUsage: &e/%cmd% give <player> <amount>L"
+  give: "&c&lUsage: &e/%cmd% give <player> <amount>L"
   # 'reload' sub-command (only 'expbottle.admin' permission holder can see this)
-  reload: "&c&bUsage: &e/%cmd% reload"
+  reload: "&c&lUsage: &e/%cmd% reload"
   # 'balance' sub-command
-  balance: "&c&bUsage: &e/%cmd% balance"
+  balance: "&c&lUsage: &e/%cmd% balance"
   # 'for' sub-command
-  for: "&c&bUsage: &e/%cmd% for <level>"
+  for: "&c&lUsage: &e/%cmd% for <level>"
 
 
 help:
