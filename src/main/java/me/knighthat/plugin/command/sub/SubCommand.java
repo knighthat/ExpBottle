@@ -23,17 +23,17 @@ public abstract class SubCommand {
 
     public abstract @NotNull String getPermission();
 
+    public abstract void execute( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args );
+
+    public @NotNull String getUsage() { return plugin.messages.getMessage( "usage." + getName() ); }
+
     public @NotNull Collection<String> getAliases() {
         String path = "aliases." + getName();
         return plugin.config.get().getStringList( path );
     }
 
-    public abstract void execute( @NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args );
-
     public void printUsage( @NotNull Audience to, @NotNull String alias ) {
-        String path = "usage." + getName();
-        String message = plugin.messages.getMessage( path );
-        message = message.replace( "%cmd%", alias );
+        String message = getUsage().replace( "%cmd%", alias );
         to.sendMessage( Component.text( message ) );
     }
 
