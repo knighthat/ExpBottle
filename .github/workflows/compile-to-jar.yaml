@@ -68,12 +68,14 @@ jobs:
     - name: Install JQ
       run: sudo apt-get update && sudo apt-get install -y jq
 
-    - name: Get Release Tag
-      id: tag
-      run: |
-        curl -s "${{ vars.EXPBOTTLE_REPO }}" >> releases.txt
-        
-        echo "release_tag=$(cat releases.txt | jq -r '.tag_name')" >> $GITHUB_OUTPUT
+    - name: Retrieve Release Tag
+      run: curl -s "${{ vars.EXPBOTTLE_REPO }}" >> releases.txt
+
+    - name: Extract Tag
+      run: tag=$(cat releases.txt | jq -r '.tag_name')
+
+    - name: Export Tag Name
+      run: echo "release_tag=$tag" >> $GITHUB_OUTPUT
 
     - name: Publish Artifacts to Release
       run: gh release upload ${{ steps.tag.outputs.release_tag }} compiled/* -R knighthat/ExpBottle
