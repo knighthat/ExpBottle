@@ -63,7 +63,7 @@ jobs:
 
     # Github CLI allows workflows to modify releases
     - name: Login Into Github CLIj
-      run: echo ${{ secrets.TEMP_TOKEN }} | gh auth login --with-token
+      run: echo ${{ secrets.RELEASE_TOKEN }} | gh auth login --with-token
 
     - name: Get Release Tag
       id: tag
