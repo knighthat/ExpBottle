@@ -18,7 +18,7 @@ This is the forked version of [ExpBottle](https://www.spigotmc.org/resources/987
 
 # Features:
 
-> I kept all features. In the future, maybe import new features.
+> I kept all features. In the future, maybe I'll import more.
 
 - Withdraw all or a specific amount of experience into a bottle.
 - Taxing (if enabled)
@@ -27,7 +27,8 @@ This is the forked version of [ExpBottle](https://www.spigotmc.org/resources/987
 - Custom aliases:
   * Main command
   * Sub-commands
-- Changing bottle's display name
+- Changing bottle's display name.
+- Command suggestion and tab completion.
 
 ## Commands
 
@@ -41,6 +42,7 @@ Available sub-commands:
 - `reload`: Reload plugin.
 - `balance`: Show total EXP.
 - `help`: Show available commands.
+- `for` : Calculates needed XP to withdraw at a level
 
 ## Permissions
 
@@ -50,6 +52,7 @@ Available sub-commands:
 | expbottle.admin     | allows 'reload'                                      |
 | expbottle.bypasstax | pays zero tax when withdraw                          |
 | expbottle.balance   | required to execute 'balance' command                |
+| expbottle.for       | to be able to use 'for' command                      |
 
 ## Placeholders (messages.yml)
 
