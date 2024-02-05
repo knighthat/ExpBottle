@@ -68,7 +68,7 @@ jobs:
     - name: Get Release Tag
       id: tag
       run: |
-        RELEASE_URL=${{ env.EXPBOTTLE_REPO }}
+        RELEASE_URL=${{ vars.EXPBOTTLE_REPO }}
         
         curl -s -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" "$RELEASE_URL" >> releases.txt
         
