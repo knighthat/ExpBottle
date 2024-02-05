@@ -65,10 +65,13 @@ jobs:
     - name: Login Into Github CLIj
       run: echo ${{ secrets.RELEASE_TOKEN }} | gh auth login --with-token
 
+    - name: Install JQ
+      run: sudo apt-get update && sudo apt-get install -y jq
+
     - name: Get Release Tag
       id: tag
       run: |
-        curl -s -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" "${{ vars.EXPBOTTLE_REPO }}" >> releases.txt
+        curl -s "${{ vars.EXPBOTTLE_REPO }}" >> releases.txt
         
         echo "release_tag=$(cat releases.txt | jq -r '.tag_name')" >> $GITHUB_OUTPUT
 
